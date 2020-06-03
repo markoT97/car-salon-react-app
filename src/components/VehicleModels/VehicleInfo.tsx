@@ -13,6 +13,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux-store";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -57,27 +59,54 @@ function createData(
 }
 */
 
-function VehicleInfo({ selectedCar }: any) {
+function VehicleInfo() {
   const classes = useStyles();
+  const selectedModel = useSelector(
+    (state: AppState) => state.vehicleList.selectedModel
+  );
 
   return (
     <>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table size="small" className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="left" colSpan={2}>
-                $ 100.40
+                {selectedModel.currency + " " + selectedModel.price}
               </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                Model
+                Engine
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedCar.model}
+                {selectedModel.engineName}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Fuel
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {selectedModel.engineType}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Year of production
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {selectedModel.yearOfProduction}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Steering wheel
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {selectedModel.sideOfSteeringWheel}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -85,7 +114,7 @@ function VehicleInfo({ selectedCar }: any) {
                 Doors
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedCar.doors}
+                {selectedModel.numberOfDoors}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -93,7 +122,7 @@ function VehicleInfo({ selectedCar }: any) {
                 Seats
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedCar.seats}
+                {selectedModel.numberOfSeats}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -101,7 +130,7 @@ function VehicleInfo({ selectedCar }: any) {
                 Transmission
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedCar.transmission}
+                {selectedModel.gearboxType}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -109,7 +138,15 @@ function VehicleInfo({ selectedCar }: any) {
                 Air conditioning
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedCar.airConditioning}
+                {selectedModel.hasAirConditioning ? "Yes" : "No"}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                ABS
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {selectedModel.hasABS ? "Yes" : "No"}
               </TableCell>
             </TableRow>
           </TableBody>
