@@ -65,6 +65,19 @@ function SelectedListItem() {
     dispatch(selectVehicleModel(selected));
   };
 
+  const handleMoveInList = (
+    list: Array<VehicleModel>,
+    currentItem: VehicleModel,
+    moveSteps: number
+  ) => {
+    const nextSelectedItem =
+      list[
+        list.map((item) => item.carId).indexOf(currentItem.carId) + moveSteps
+      ];
+
+    handleListItemClick(nextSelectedItem as typeof currentItem);
+  };
+
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
   const { vehicleModels } = vehicleList;
   const { selectedModel } = vehicleList;
@@ -96,12 +109,7 @@ function SelectedListItem() {
         <ButtonGroup fullWidth variant="contained">
           <Button
             className={classes.expandListButtons}
-            onClick={(event) => {
-              const nextSelectedCar =
-                vehicleModels[vehicleModels.indexOf(selectedModel) - 1];
-
-              handleListItemClick(nextSelectedCar as VehicleModel);
-            }}
+            onClick={() => handleMoveInList(vehicleModels, selectedModel, -1)}
             disabled={!(vehicleModels.indexOf(selectedModel) > 0)}
           >
             <ExpandLess className={classes.expandListIcon} />
@@ -109,14 +117,7 @@ function SelectedListItem() {
 
           <Button
             className={classes.expandListButtons}
-            onClick={(event) => {
-              const nextSelectedCar =
-                vehicleModels[vehicleModels.indexOf(selectedModel) + 1];
-
-              console.log(vehicleModels.indexOf(selectedModel));
-
-              handleListItemClick(nextSelectedCar as VehicleModel);
-            }}
+            onClick={() => handleMoveInList(vehicleModels, selectedModel, 1)}
             disabled={
               !(vehicleModels.indexOf(selectedModel) < vehicleModels.length - 1)
             }
