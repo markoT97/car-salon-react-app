@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -8,7 +8,10 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux-store/index";
 import { VehicleModel } from "../../data/models/VehicleModel";
-import { selectVehicleModel } from "../../redux-store/vehicleList/actions";
+import {
+  selectVehicleModel,
+  fetchVehicleModels,
+} from "../../redux-store/vehicleList/actions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,6 +84,10 @@ function SelectedListItem() {
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
   const { vehicleModels } = vehicleList;
   const { selectedModel } = vehicleList;
+
+  useEffect(() => {
+    dispatch(fetchVehicleModels());
+  }, [dispatch]);
 
   return (
     <>
