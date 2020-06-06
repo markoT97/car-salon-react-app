@@ -1,3 +1,5 @@
+import { Image } from "./Image";
+
 export type VehicleModel = {
   carId: number;
   chassisNumber: string;
@@ -22,5 +24,5 @@ export type VehicleModel = {
   hasAirConditioning: boolean;
   supplierId: number;
   supplierName: string;
-  image: string;
+  image: Image;
 };

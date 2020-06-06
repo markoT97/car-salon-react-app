@@ -31,7 +31,13 @@ const initialState: VehicleListState = {
     hasAirConditioning: false,
     supplierId: 0,
     supplierName: "",
-    image: "",
+    image: {
+      imageId: 0,
+      modelId: 0,
+      name: "",
+      extension: "",
+      path: "",
+    },
   },
 };
 

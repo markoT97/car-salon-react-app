@@ -20,7 +20,7 @@ function Index() {
   const classes = useStyles();
 
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
-  const { selectedModel } = vehicleList;
+  const { image } = vehicleList.selectedModel;
 
   return (
     <>
@@ -34,7 +34,11 @@ function Index() {
             <VehiclesList />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <img src={selectedModel.image} alt="" className={classes.image} />
+            <img
+              src={image.path + image.name + "." + image.extension}
+              alt={image.name}
+              className={classes.image}
+            />
           </Grid>
           <Grid item xs={12} sm={3}>
             <VehicleInfo />
