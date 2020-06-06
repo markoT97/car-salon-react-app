@@ -117,7 +117,13 @@ function SelectedListItem() {
           <Button
             className={classes.expandListButtons}
             onClick={() => handleMoveInList(vehicleModels, selectedModel, -1)}
-            disabled={!(vehicleModels.indexOf(selectedModel) > 0)}
+            disabled={
+              !(
+                vehicleModels
+                  .map((car) => car.carId)
+                  .indexOf(selectedModel.carId) > 0
+              )
+            }
           >
             <ExpandLess className={classes.expandListIcon} />
           </Button>
@@ -126,7 +132,12 @@ function SelectedListItem() {
             className={classes.expandListButtons}
             onClick={() => handleMoveInList(vehicleModels, selectedModel, 1)}
             disabled={
-              !(vehicleModels.indexOf(selectedModel) < vehicleModels.length - 1)
+              !(
+                vehicleModels
+                  .map((car) => car.carId)
+                  .indexOf(selectedModel.carId) <
+                vehicleModels.length - 1
+              )
             }
           >
             <ExpandMore className={classes.expandListIcon} />
