@@ -2,7 +2,7 @@ import { FETCH_VEHICLES, SELECT_VEHICLE } from "./types";
 import { Vehicle } from "../../data/models/Vehicle";
 import { getAll as getCars } from "../../data/services/vehicleModelService";
 import { getAll as getImages } from "../../data/services/imageService";
-import { defaultCarImage } from "./../../shared/constants";
+import { defaultImage } from "./../../data/models/Image";
 
 export function fetchVehicles(
   brandId?: number,
@@ -28,7 +28,7 @@ export function selectVehicle(vehicle: Vehicle) {
       type: SELECT_VEHICLE,
       payload: {
         ...vehicle,
-        image: data.length > 0 ? data[0] : defaultCarImage,
+        image: data.length > 0 ? data[0] : defaultImage,
       },
     });
   };

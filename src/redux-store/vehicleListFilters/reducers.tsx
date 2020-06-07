@@ -10,38 +10,20 @@ import {
   FETCH_VEHICLE_SUPPLIERS,
   SELECT_VEHICLE_SUPPLIER,
 } from "./types";
+import { defaultModel } from "../../data/models/Model";
+import { defaultSupplier } from "../../data/models/Supplier";
+import { defaultEngine } from "../../data/models/Engine";
+import { defaultBrand } from "../../data/models/Brand";
 
 const initialState: VehicleListFiltersState = {
   brands: [],
-  selectedBrand: {
-    brandId: 0,
-    name: "",
-  },
+  selectedBrand: defaultBrand,
   models: [],
-  selectedModel: {
-    modelId: 0,
-    brandId: 0,
-    engineId: 0,
-    equipmentId: 0,
-    name: "",
-    numberOfDoors: 0,
-    numberOfSeats: 0,
-    gearboxType: "",
-    sideOfSteeringWheel: "",
-    price: 0,
-  },
+  selectedModel: defaultModel,
   engines: [],
-  selectedEngine: {
-    engineId: 0,
-    name: "",
-    type: "",
-    powerKW: 0,
-  },
+  selectedEngine: defaultEngine,
   suppliers: [],
-  selectedSupplier: {
-    supplierId: 0,
-    name: "",
-  },
+  selectedSupplier: defaultSupplier,
 };
 
 function vehicleListFiltersReducer(

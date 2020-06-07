@@ -23,11 +23,11 @@ import {
   fetchSuppliers,
   selectVehicleSupplier,
 } from "../../redux-store/vehicleListFilters/actions";
-import { Brand } from "../../data/models/Brand";
-import { Model } from "../../data/models/Model";
 import { fetchVehicles } from "../../redux-store/vehicleList/actions";
-import { Engine } from "../../data/models/Engine";
-import { Supplier } from "../../data/models/Supplier";
+import { Brand, defaultBrand } from "../../data/models/Brand";
+import { Model, defaultModel } from "../../data/models/Model";
+import { Engine, defaultEngine } from "../../data/models/Engine";
+import { Supplier, defaultSupplier } from "../../data/models/Supplier";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,9 +69,7 @@ function FilterData() {
     );
 
     dispatch(
-      selectVehicleBrand(
-        foundedBrand ? (foundedBrand as Brand) : { brandId: 0, name: "" }
-      )
+      selectVehicleBrand(foundedBrand ? (foundedBrand as Brand) : defaultBrand)
     );
   };
 
@@ -83,22 +81,7 @@ function FilterData() {
     );
 
     dispatch(
-      selectVehicleModel(
-        foundedModel
-          ? (foundedModel as Model)
-          : {
-              modelId: 0,
-              brandId: 0,
-              engineId: 0,
-              equipmentId: 0,
-              name: "",
-              numberOfDoors: 0,
-              numberOfSeats: 0,
-              gearboxType: "",
-              sideOfSteeringWheel: "",
-              price: 0,
-            }
-      )
+      selectVehicleModel(foundedModel ? (foundedModel as Model) : defaultModel)
     );
   };
 
@@ -111,9 +94,7 @@ function FilterData() {
 
     dispatch(
       selectVehicleEngine(
-        foundedEngine
-          ? (foundedEngine as Engine)
-          : { engineId: 0, name: "", type: "", powerKW: 0 }
+        foundedEngine ? (foundedEngine as Engine) : defaultEngine
       )
     );
   };
@@ -128,9 +109,7 @@ function FilterData() {
 
     dispatch(
       selectVehicleSupplier(
-        foundedSupplier
-          ? (foundedSupplier as Supplier)
-          : { supplierId: 0, name: "" }
+        foundedSupplier ? (foundedSupplier as Supplier) : defaultSupplier
       )
     );
   };
@@ -203,7 +182,6 @@ function FilterData() {
                     id="select"
                     value={selectedModel.modelId}
                     onChange={handleModelListItemClick}
-                    // disabled={selectedBrand.brandId === 0}
                   >
                     <option aria-label="None" value="" />
                     {models.map((model: Model, i: number) => {

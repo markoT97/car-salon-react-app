@@ -10,3 +10,16 @@ export type Model = {
   sideOfSteeringWheel: string;
   price: number;
 };
+
+export const defaultModel: Model = {
+  modelId: 0,
+  brandId: 0,
+  engineId: 0,
+  equipmentId: 0,
+  name: "",
+  numberOfDoors: 0,
+  numberOfSeats: 0,
+  gearboxType: "",
+  sideOfSteeringWheel: "",
+  price: 0,
+};
