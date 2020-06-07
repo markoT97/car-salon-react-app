@@ -20,7 +20,7 @@ function Index() {
   const classes = useStyles();
 
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
-  const { image } = vehicleList.selectedModel;
+  const { image } = vehicleList.selectedVehicle;
 
   return (
     <>

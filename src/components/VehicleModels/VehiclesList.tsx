@@ -7,10 +7,10 @@ import { Button, ButtonGroup, FormControl, Select } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux-store/index";
-import { VehicleModel } from "../../data/models/VehicleModel";
+import { Vehicle } from "../../data/models/Vehicle";
 import {
-  selectVehicleModel,
-  fetchVehicleModels,
+  selectVehicle,
+  fetchVehicles,
 } from "../../redux-store/vehicleList/actions";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,15 +62,15 @@ function SelectedListItem() {
   const dispatch = useDispatch();
 
   const handleListItemClick = (
-    selected: VehicleModel,
+    selected: Vehicle,
     event?: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    dispatch(selectVehicleModel(selected));
+    dispatch(selectVehicle(selected));
   };
 
   const handleMoveInList = (
-    list: Array<VehicleModel>,
-    currentItem: VehicleModel,
+    list: Array<Vehicle>,
+    currentItem: Vehicle,
     moveSteps: number
   ) => {
     const nextSelectedItem =
@@ -82,11 +82,11 @@ function SelectedListItem() {
   };
 
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
-  const { vehicleModels } = vehicleList;
-  const { selectedModel } = vehicleList;
+  const { vehicles } = vehicleList;
+  const { selectedVehicle } = vehicleList;
 
   useEffect(() => {
-    dispatch(fetchVehicleModels());
+    dispatch(fetchVehicles());
   }, [dispatch]);
 
   return (
@@ -97,17 +97,19 @@ function SelectedListItem() {
           aria-label="main mailbox folders"
           className={classes.list}
         >
-          {vehicleModels.map((car: VehicleModel, i: any) => {
+          {vehicles.map((vehicle: Vehicle, i: any) => {
             return (
               <ListItem
                 key={i}
                 button
-                selected={car.carId === selectedModel.carId}
-                autoFocus={car.carId === selectedModel.carId}
+                selected={vehicle.carId === selectedVehicle.carId}
+                autoFocus={vehicle.carId === selectedVehicle.carId}
                 className={classes.listItem}
-                onClick={(event) => handleListItemClick(car, event)}
+                onClick={(event) => handleListItemClick(vehicle, event)}
               >
-                <ListItemText primary={car.brandName + " " + car.modelName} />
+                <ListItemText
+                  primary={vehicle.brandName + " " + vehicle.modelName}
+                />
               </ListItem>
             );
           })}
@@ -116,12 +118,12 @@ function SelectedListItem() {
         <ButtonGroup fullWidth variant="contained">
           <Button
             className={classes.expandListButtons}
-            onClick={() => handleMoveInList(vehicleModels, selectedModel, -1)}
+            onClick={() => handleMoveInList(vehicles, selectedVehicle, -1)}
             disabled={
               !(
-                vehicleModels
-                  .map((car) => car.carId)
-                  .indexOf(selectedModel.carId) > 0
+                vehicles
+                  .map((vehicle) => vehicle.carId)
+                  .indexOf(selectedVehicle.carId) > 0
               )
             }
           >
@@ -130,13 +132,13 @@ function SelectedListItem() {
 
           <Button
             className={classes.expandListButtons}
-            onClick={() => handleMoveInList(vehicleModels, selectedModel, 1)}
+            onClick={() => handleMoveInList(vehicles, selectedVehicle, 1)}
             disabled={
               !(
-                vehicleModels
-                  .map((car) => car.carId)
-                  .indexOf(selectedModel.carId) <
-                vehicleModels.length - 1
+                vehicles
+                  .map((vehicle) => vehicle.carId)
+                  .indexOf(selectedVehicle.carId) <
+                vehicles.length - 1
               )
             }
           >
@@ -149,19 +151,20 @@ function SelectedListItem() {
         <Select
           native
           id="select"
-          value={selectedModel.carId}
+          value={selectedVehicle.carId}
           onChange={(event) => {
-            const selectedCar = vehicleModels.find(
-              (car) => car.carId === parseInt(event.target.value as string)
+            const selectedVehicle = vehicles.find(
+              (vehicle) =>
+                vehicle.carId === parseInt(event.target.value as string)
             );
 
-            handleListItemClick(selectedCar as VehicleModel);
+            handleListItemClick(selectedVehicle as Vehicle);
           }}
         >
-          {vehicleModels.map((car: VehicleModel, i: any) => {
+          {vehicles.map((vehicle: Vehicle, i: number) => {
             return (
-              <option key={i} value={car.carId}>
-                {car.brandName + " " + car.modelName}
+              <option key={i} value={vehicle.carId}>
+                {vehicle.brandName + " " + vehicle.modelName}
               </option>
             );
           })}

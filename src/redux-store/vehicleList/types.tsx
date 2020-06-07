@@ -1,23 +1,21 @@
-import { VehicleModel } from "../../data/models/VehicleModel";
+import { Vehicle } from "../../data/models/Vehicle";
 
 export interface VehicleListState {
-  vehicleModels: Array<VehicleModel>;
-  selectedModel: VehicleModel;
+  vehicles: Array<Vehicle>;
+  selectedVehicle: Vehicle;
 }
 
-export const FETCH_VEHICLE_MODELS = "FETCH_VEHICLE_MODELS";
-export const SELECT_VEHICLE_MODEL = "SELECT_VEHICLE_MODEL";
+export const FETCH_VEHICLES = "FETCH_VEHICLES";
+export const SELECT_VEHICLE = "SELECT_VEHICLE";
 
-interface FetchVehicleModelsAction {
-  type: typeof FETCH_VEHICLE_MODELS;
-  payload: Array<VehicleModel>;
+interface FetchVehiclesAction {
+  type: typeof FETCH_VEHICLES;
+  payload: Array<Vehicle>;
 }
 
-interface SelectVehicleModelAction {
-  type: typeof SELECT_VEHICLE_MODEL;
-  payload: VehicleModel;
+interface SelectVehicleAction {
+  type: typeof SELECT_VEHICLE;
+  payload: Vehicle;
 }
 
-export type VehicleListActionTypes =
-  | FetchVehicleModelsAction
-  | SelectVehicleModelAction;
+export type VehicleListActionTypes = FetchVehiclesAction | SelectVehicleAction;

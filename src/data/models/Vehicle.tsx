@@ -1,6 +1,6 @@
 import { Image } from "./Image";
 
-export type VehicleModel = {
+export type Vehicle = {
   carId: number;
   chassisNumber: string;
   yearOfProduction: number;

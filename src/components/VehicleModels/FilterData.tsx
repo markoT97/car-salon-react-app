@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   Select,
@@ -11,6 +11,23 @@ import {
   FormGroup,
 } from "@material-ui/core";
 import { FilterList } from "@material-ui/icons";
+import { useSelector, useDispatch } from "react-redux";
+import { AppState } from "../../redux-store/index";
+import {
+  selectVehicleBrand,
+  selectVehicleModel,
+  fetchBrands,
+  fetchModels,
+  selectVehicleEngine,
+  fetchEngines,
+  fetchSuppliers,
+  selectVehicleSupplier,
+} from "../../redux-store/vehicleListFilters/actions";
+import { Brand } from "../../data/models/Brand";
+import { Model } from "../../data/models/Model";
+import { fetchVehicles } from "../../redux-store/vehicleList/actions";
+import { Engine } from "../../data/models/Engine";
+import { Supplier } from "../../data/models/Supplier";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,32 +57,118 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const carBrands = ["BMW", "Audi", "Wolkswagen", "Fiat", "Toyota"];
-const carModels = ["X6", "A6", "Golf 4", "Punto", "Yaris"];
-const carEngines = ["Engine 1", "Engine 2", "Engine 3", "Engine 4", "Engine 5"];
-const carEquipments = [
-  "Equipment 1",
-  "Equipment 2",
-  "Equipment 3",
-  "Equipment 4",
-  "Equipment 5",
-];
-const carSuppliers = [
-  "Supplier 1",
-  "Supplier 2",
-  "Supplier 3",
-  "Supplier 4",
-  "Supplier 5",
-];
-
 function FilterData() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [selectedBrand, setSelectedBrand] = React.useState("");
-  const [selectedModel, setSelectedModel] = React.useState("");
-  const [selectedEngine, setSelectedEngine] = React.useState("");
-  const [selectedEquipment, setSelectedEquipment] = React.useState("");
-  const [selectedSupplier, setSelectedSupplier] = React.useState("");
+  const handleBrandListItemClick = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const foundedBrand = brands.find(
+      (brand) => brand.brandId === parseInt(event.target.value as string)
+    );
+
+    dispatch(
+      selectVehicleBrand(
+        foundedBrand ? (foundedBrand as Brand) : { brandId: 0, name: "" }
+      )
+    );
+  };
+
+  const handleModelListItemClick = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const foundedModel = models.find(
+      (model) => model.modelId === parseInt(event.target.value as string)
+    );
+
+    dispatch(
+      selectVehicleModel(
+        foundedModel
+          ? (foundedModel as Model)
+          : {
+              modelId: 0,
+              brandId: 0,
+              engineId: 0,
+              equipmentId: 0,
+              name: "",
+              numberOfDoors: 0,
+              numberOfSeats: 0,
+              gearboxType: "",
+              sideOfSteeringWheel: "",
+              price: 0,
+            }
+      )
+    );
+  };
+
+  const handleEngineListItemClick = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const foundedEngine = engines.find(
+      (engine) => engine.engineId === parseInt(event.target.value as string)
+    );
+
+    dispatch(
+      selectVehicleEngine(
+        foundedEngine
+          ? (foundedEngine as Engine)
+          : { engineId: 0, name: "", type: "", powerKW: 0 }
+      )
+    );
+  };
+
+  const handleSupplierListItemClick = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const foundedSupplier = suppliers.find(
+      (supplier) =>
+        supplier.supplierId === parseInt(event.target.value as string)
+    );
+
+    dispatch(
+      selectVehicleSupplier(
+        foundedSupplier
+          ? (foundedSupplier as Supplier)
+          : { supplierId: 0, name: "" }
+      )
+    );
+  };
+
+  const vehicleListFilters = useSelector(
+    (state: AppState) => state.vehicleListFilters
+  );
+  const {
+    brands,
+    selectedBrand,
+    models,
+    selectedModel,
+    engines,
+    selectedEngine,
+    suppliers,
+    selectedSupplier,
+  } = vehicleListFilters;
+
+  useEffect(() => {
+    dispatch(
+      fetchBrands(
+        selectedModel.modelId,
+        selectedEngine.engineId,
+        selectedSupplier.supplierId
+      )
+    );
+    if (selectedBrand) {
+      dispatch(fetchModels(selectedBrand.brandId));
+      dispatch(fetchEngines(selectedBrand.brandId));
+      dispatch(fetchSuppliers(selectedBrand.brandId));
+    }
+  }, [
+    dispatch,
+    selectedModel,
+    selectedEngine,
+    selectedSupplier,
+    selectedBrand,
+  ]);
 
   return (
     <>
@@ -79,16 +182,14 @@ function FilterData() {
                   <Select
                     native
                     id="select"
-                    value={selectedBrand}
-                    onChange={(event) => {
-                      setSelectedBrand(event.target.value as string);
-                    }}
+                    value={selectedBrand.brandId}
+                    onChange={handleBrandListItemClick}
                   >
                     <option aria-label="None" value="" />
-                    {carBrands.map((brand: any, i: any) => {
+                    {brands.map((brand: Brand, i: number) => {
                       return (
-                        <option key={i} value={brand}>
-                          {brand}
+                        <option key={i} value={brand.brandId}>
+                          {brand.name}
                         </option>
                       );
                     })}
@@ -100,16 +201,15 @@ function FilterData() {
                   <Select
                     native
                     id="select"
-                    value={selectedModel}
-                    onChange={(event) => {
-                      setSelectedModel(event.target.value as string);
-                    }}
+                    value={selectedModel.modelId}
+                    onChange={handleModelListItemClick}
+                    // disabled={selectedBrand.brandId === 0}
                   >
                     <option aria-label="None" value="" />
-                    {carModels.map((model: any, i: any) => {
+                    {models.map((model: Model, i: number) => {
                       return (
-                        <option key={i} value={model}>
-                          {model}
+                        <option key={i} value={model.modelId}>
+                          {model.name}
                         </option>
                       );
                     })}
@@ -122,43 +222,20 @@ function FilterData() {
                   <Select
                     native
                     id="select"
-                    value={selectedEngine}
-                    onChange={(event) => {
-                      setSelectedEngine(event.target.value as string);
-                    }}
+                    value={selectedEngine.engineId}
+                    onChange={handleEngineListItemClick}
                   >
                     <option aria-label="None" value="" />
-                    {carEngines.map((engine: any, i: any) => {
+                    {engines.map((engine: Engine, i: number) => {
                       return (
-                        <option key={i} value={engine}>
-                          {engine}
+                        <option key={i} value={engine.engineId}>
+                          {engine.name}
                         </option>
                       );
                     })}
                   </Select>
                 </FormControl>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="grouped-native-select">
-                    Equipment
-                  </InputLabel>
-                  <Select
-                    native
-                    id="select"
-                    value={selectedEquipment}
-                    onChange={(event) => {
-                      setSelectedEquipment(event.target.value as string);
-                    }}
-                  >
-                    <option aria-label="None" value="" />
-                    {carEquipments.map((equipment: any, i: any) => {
-                      return (
-                        <option key={i} value={equipment}>
-                          {equipment}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
+
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="grouped-native-select">
                     Supplier
@@ -166,16 +243,14 @@ function FilterData() {
                   <Select
                     native
                     id="select"
-                    value={selectedSupplier}
-                    onChange={(event) => {
-                      setSelectedSupplier(event.target.value as string);
-                    }}
+                    value={selectedSupplier.supplierId}
+                    onChange={handleSupplierListItemClick}
                   >
                     <option aria-label="None" value="" />
-                    {carSuppliers.map((supplier: any, i: any) => {
+                    {suppliers.map((supplier: Supplier, i: number) => {
                       return (
-                        <option key={i} value={supplier}>
-                          {supplier}
+                        <option key={i} value={supplier.supplierId}>
+                          {supplier.name}
                         </option>
                       );
                     })}
@@ -190,8 +265,19 @@ function FilterData() {
                 variant="outlined"
                 color="primary"
                 className={classes.submitButton}
+                onClick={() =>
+                  dispatch(
+                    fetchVehicles(
+                      selectedBrand.brandId,
+                      selectedModel.modelId,
+                      selectedEngine.engineId,
+                      selectedSupplier.supplierId
+                    )
+                  )
+                }
               >
-                <FilterList /> &nbsp;Filter
+                <FilterList />
+                &nbsp;Filter
               </Button>
             </Grid>
           </Grid>

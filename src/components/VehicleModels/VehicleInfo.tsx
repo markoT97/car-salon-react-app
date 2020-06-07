@@ -61,8 +61,8 @@ function createData(
 
 function VehicleInfo() {
   const classes = useStyles();
-  const selectedModel = useSelector(
-    (state: AppState) => state.vehicleList.selectedModel
+  const selectedVehicle = useSelector(
+    (state: AppState) => state.vehicleList.selectedVehicle
   );
 
   return (
@@ -72,7 +72,7 @@ function VehicleInfo() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left" colSpan={2}>
-                {selectedModel.currency + " " + selectedModel.price}
+                {selectedVehicle.currency + " " + selectedVehicle.price}
               </StyledTableCell>
             </TableRow>
           </TableHead>
@@ -82,7 +82,7 @@ function VehicleInfo() {
                 Engine
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.engineName}
+                {selectedVehicle.engineName}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -90,7 +90,7 @@ function VehicleInfo() {
                 Fuel
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.engineType}
+                {selectedVehicle.engineType}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -98,7 +98,7 @@ function VehicleInfo() {
                 Year of production
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.yearOfProduction}
+                {selectedVehicle.yearOfProduction}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -106,7 +106,7 @@ function VehicleInfo() {
                 Steering wheel
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.sideOfSteeringWheel}
+                {selectedVehicle.sideOfSteeringWheel}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -114,7 +114,7 @@ function VehicleInfo() {
                 Doors
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.numberOfDoors}
+                {selectedVehicle.numberOfDoors}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -122,7 +122,7 @@ function VehicleInfo() {
                 Seats
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.numberOfSeats}
+                {selectedVehicle.numberOfSeats}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -130,7 +130,7 @@ function VehicleInfo() {
                 Transmission
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.gearboxType}
+                {selectedVehicle.gearboxType}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -138,7 +138,7 @@ function VehicleInfo() {
                 Air conditioning
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.hasAirConditioning ? "Yes" : "No"}
+                {selectedVehicle.hasAirConditioning ? "Yes" : "No"}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -146,7 +146,7 @@ function VehicleInfo() {
                 ABS
               </TableCell>
               <TableCell component="th" scope="row">
-                {selectedModel.hasABS ? "Yes" : "No"}
+                {selectedVehicle.hasABS ? "Yes" : "No"}
               </TableCell>
             </TableRow>
           </TableBody>

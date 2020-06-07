@@ -1,5 +1,11 @@
 import API from "./../../utils/API";
 
 export async function getAll(modelId?: number) {
-  return await API.get("/images" + (modelId ? "?model_id=" + modelId : ""));
+  var config = {
+    params: {
+      model_id: modelId ? modelId : undefined,
+    },
+  };
+
+  return await API.get("/images", config);
 }

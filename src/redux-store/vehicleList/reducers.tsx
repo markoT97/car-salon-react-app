@@ -1,13 +1,13 @@
 import {
-  FETCH_VEHICLE_MODELS,
-  SELECT_VEHICLE_MODEL,
+  FETCH_VEHICLES,
+  SELECT_VEHICLE,
   VehicleListActionTypes,
 } from "./types";
 import { VehicleListState } from "./types";
 
 const initialState: VehicleListState = {
-  vehicleModels: [],
-  selectedModel: {
+  vehicles: [],
+  selectedVehicle: {
     carId: 0,
     chassisNumber: "",
     yearOfProduction: 0,
@@ -46,10 +46,10 @@ function vehicleListReducer(
   action: VehicleListActionTypes
 ): VehicleListState {
   switch (action.type) {
-    case FETCH_VEHICLE_MODELS:
-      return { ...state, vehicleModels: action.payload };
-    case SELECT_VEHICLE_MODEL:
-      return { ...state, selectedModel: action.payload };
+    case FETCH_VEHICLES:
+      return { ...state, vehicles: action.payload };
+    case SELECT_VEHICLE:
+      return { ...state, selectedVehicle: action.payload };
     default:
       return state;
   }
