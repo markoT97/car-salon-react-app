@@ -4,7 +4,8 @@ export async function getAll(
   brandId?: number,
   modelId?: number,
   engineId?: number,
-  supplierId?: number
+  supplierId?: number,
+  userId?: number
 ) {
   var config = {
     params: {
@@ -12,6 +13,7 @@ export async function getAll(
       model_id: modelId ? modelId : undefined,
       engine_id: engineId ? engineId : undefined,
       supplier_id: supplierId ? supplierId : undefined,
+      user_id: userId ? userId : undefined,
     },
   };
 

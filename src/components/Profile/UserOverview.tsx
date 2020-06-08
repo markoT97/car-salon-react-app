@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Avatar } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../redux-store";
+import { fetchCurrentUser } from "../../redux-store/authentication/actions";
 
 const useStyles = makeStyles((theme) => ({
   userTitle: {},
@@ -21,17 +24,23 @@ const useStyles = makeStyles((theme) => ({
 
 function UserOverview() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const authentication = useSelector((state: AppState) => state.authentication);
+  const { currentUser } = authentication;
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser(1));
+  }, [dispatch]);
 
   return (
     <Grid container alignItems="center" justify="center">
       <Grid item>
-        <Avatar
-          className={classes.avatar}
-          src="https://images.pexels.com/photos/3778147/pexels-photo-3778147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=450&w=940"
-          alt=""
-        />
-        <h1 className={classes.userTitle}>Marko Trickovic</h1>
-        <h4 className={classes.userType}>Seller</h4>
+        <Avatar className={classes.avatar} src={currentUser.imagePath} alt="" />
+        <h1 className={classes.userTitle}>
+          {currentUser.firstName + " " + currentUser.lastName}
+        </h1>
+        <h4 className={classes.userType}>{currentUser.role}</h4>
       </Grid>
     </Grid>
   );

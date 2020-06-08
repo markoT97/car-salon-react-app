@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -8,6 +8,11 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCarsSoldByUser } from "../../redux-store/authentication/actions";
+import { AppState } from "../../redux-store";
+import { Vehicle } from "../../data/models/Vehicle";
+import { defaultImage } from "../../data/models/Image";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,31 +25,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const soldCars = [
-  {
-    brandName: "Audi",
-    modelName: "A6",
-    image: "http://carrental.themeinjection.com/theme/img/vehicle4.jpg",
-  },
-  {
-    brandName: "BMW",
-    modelName: "X6",
-    image: "http://carrental.themeinjection.com/theme/img/vehicle3.jpg",
-  },
-  {
-    brandName: "Fiat",
-    modelName: "Punto",
-    image: "http://carrental.themeinjection.com/theme/img/vehicle2.jpg",
-  },
-];
-
 function SoldCars() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const authentication = useSelector((state: AppState) => state.authentication);
+  const { soldCars } = authentication;
+
+  useEffect(() => {
+    dispatch(fetchCarsSoldByUser(1));
+  }, [dispatch]);
   return (
     <>
       <h2 className={classes.heading}>Recently sold cars</h2>
       <Grid container alignItems="center" justify="center" spacing={1}>
-        {soldCars.map((car, i) => {
+        {soldCars.map((car: Vehicle, i: number) => {
           return (
             <Grid item key={i} md={4}>
               <Card className={classes.card}>
@@ -53,7 +48,12 @@ function SoldCars() {
                     component="img"
                     alt={car.brandName + " " + car.modelName}
                     height="190"
-                    image={car.image}
+                    image={
+                      defaultImage.path +
+                      defaultImage.name +
+                      "." +
+                      defaultImage.extension
+                    }
                     title={car.brandName + " " + car.modelName}
                   />
                   <CardContent>

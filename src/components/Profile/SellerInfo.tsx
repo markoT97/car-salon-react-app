@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../redux-store";
+import { fetchUserSellingInfo } from "../../redux-store/authentication/actions";
 
 const useStyles = makeStyles((theme) => ({
   userInfo: {
@@ -15,6 +18,15 @@ const useStyles = makeStyles((theme) => ({
 
 function SellerInfo() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const authentication = useSelector((state: AppState) => state.authentication);
+  const { sellingInfo } = authentication;
+
+  useEffect(() => {
+    dispatch(fetchUserSellingInfo(1));
+  }, [dispatch]);
+
   return (
     <Grid
       container
@@ -32,7 +44,7 @@ function SellerInfo() {
         >
           <Grid item xs={12}>
             <Typography noWrap={true} variant="h3" color="primary">
-              10
+              {sellingInfo.numberOfSoldCars}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -44,7 +56,7 @@ function SellerInfo() {
         <Grid container>
           <Grid item md={12}>
             <Typography noWrap={true} variant="h3" color="primary">
-              $ 45K
+              {sellingInfo.currency + " " + sellingInfo.totalEarnedMoney}
             </Typography>
           </Grid>
         </Grid>
