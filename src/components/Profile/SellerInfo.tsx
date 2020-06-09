@@ -21,11 +21,11 @@ function SellerInfo() {
   const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { sellingInfo } = userProfile;
+  const { currentUser, sellingInfo } = userProfile;
 
   useEffect(() => {
-    dispatch(fetchUserSellingInfo(1));
-  }, [dispatch]);
+    dispatch(fetchUserSellingInfo(currentUser.userId));
+  }, [dispatch, currentUser.userId]);
 
   return (
     <Grid

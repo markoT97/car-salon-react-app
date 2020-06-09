@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Avatar } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
-import { fetchCurrentUser } from "../../redux-store/userProfile/actions";
 
 const useStyles = makeStyles((theme) => ({
   userTitle: {},
@@ -24,14 +23,9 @@ const useStyles = makeStyles((theme) => ({
 
 function UserOverview() {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
   const { currentUser } = userProfile;
-
-  useEffect(() => {
-    dispatch(fetchCurrentUser(1));
-  }, [dispatch]);
 
   return (
     <Grid container alignItems="center" justify="center">

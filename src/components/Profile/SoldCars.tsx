@@ -30,11 +30,11 @@ function SoldCars() {
   const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { soldCars } = userProfile;
+  const { currentUser, soldCars } = userProfile;
 
   useEffect(() => {
-    dispatch(fetchCarsSoldByUser(1));
-  }, [dispatch]);
+    dispatch(fetchCarsSoldByUser(currentUser.userId));
+  }, [dispatch, currentUser.userId]);
   return (
     <>
       <h2 className={classes.heading}>Recently sold cars</h2>

@@ -3,6 +3,7 @@ import {
   FETCH_USER_SELLING_INFO,
   FETCH_CARS_SOLD_BY_USER,
   AUTHENTICATE_USER,
+  UNAUTHENTICATE_USER,
 } from "./types";
 import { authenticate } from "../../data/services/userService";
 import { get as getUser } from "../../data/services/userService";
@@ -21,6 +22,10 @@ export function authenticateUser(authenticationModel: AuthenticationModel) {
     dispatch(fetchCurrentUser(parseInt(decodedToken.jti)));
     return dispatch({ type: AUTHENTICATE_USER, payload: data });
   };
+}
+
+export function unauthenticateUser() {
+  return { type: UNAUTHENTICATE_USER };
 }
 
 export function fetchCurrentUser(userId: number) {

@@ -21,6 +21,9 @@ import {
 } from "@material-ui/icons";
 
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { AppState } from "../redux-store";
+import { unauthenticateUser } from "../redux-store/userProfile/actions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,6 +112,11 @@ export default function PrimarySearchAppBar(props: Props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { isAuthenticated } = userProfile;
+
+  const dispatch = useDispatch();
+
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -131,14 +139,12 @@ export default function PrimarySearchAppBar(props: Props) {
     { title: "Register", icon: "power", route: "/register" },
   ];
 
-  /*
   const profileUserNavigationItems = [
     { title: "Profile", icon: "power", route: "/my-profile" },
     { title: "Settings", icon: "settings", route: "/settings" },
     { title: "Dashboard", icon: "power", route: "/dashboard" },
-    { title: "Logout", icon: "power", route: "/" },
+    { title: "Logout", icon: "power", route: "/", logout: true },
   ];
-  */
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -151,13 +157,26 @@ export default function PrimarySearchAppBar(props: Props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {profileGuestNavigationItems.map((item, i) => {
-        return (
-          <MenuItem key={i} component={Link} to={item.route}>
-            {item.title}
-          </MenuItem>
-        );
-      })}
+      {isAuthenticated
+        ? profileUserNavigationItems.map((item, i) => {
+            return (
+              <MenuItem
+                key={i}
+                onClick={() => item.logout && dispatch(unauthenticateUser())}
+                component={Link}
+                to={item.route}
+              >
+                {item.title}
+              </MenuItem>
+            );
+          })
+        : profileGuestNavigationItems.map((item, i) => {
+            return (
+              <MenuItem key={i} component={Link} to={item.route}>
+                {item.title}
+              </MenuItem>
+            );
+          })}
     </Menu>
   );
 
