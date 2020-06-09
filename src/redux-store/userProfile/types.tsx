@@ -1,12 +1,13 @@
 import { User } from "../../data/models/User";
 import { UserSignedContract } from "../../data/models/UserSignedContract";
 import { Vehicle } from "../../data/models/Vehicle";
-import { AuthenticationModel } from "../../data/models/AuthenticationModel";
+import { TokenModel } from "../../data/models/TokenModel";
 
 export interface AuthenticationState {
   currentUser: User;
   sellingInfo: UserSignedContract;
   soldCars: Array<Vehicle>;
+  token: TokenModel;
   isAuthenticated: Boolean;
 }
 
@@ -18,7 +19,7 @@ export const FETCH_CARS_SOLD_BY_USER = "FETCH_CARS_SOLD_BY_USER";
 
 interface AuthenticateUserAction {
   type: typeof AUTHENTICATE_USER;
-  payload: AuthenticationModel;
+  payload: TokenModel;
 }
 
 interface UnauthenticateUserAction {

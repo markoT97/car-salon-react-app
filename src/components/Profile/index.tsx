@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Grid, Divider } from "@material-ui/core";
 import UserOverview from "./UserOverview";
 import UserDescription from "./UserDescription";
 import SoldCars from "./SoldCars";
 import SellerInfo from "./SellerInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../redux-store";
+import { fetchCurrentUser } from "../../redux-store/userProfile/actions";
 
 /*
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
 
 function Index() {
   //const classes = useStyles();
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { token } = userProfile;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser(parseInt(token.jti)));
+  }, [dispatch, token.jti]);
 
   return (
     <Container>

@@ -4,3 +4,10 @@ export type TokenModel = {
   jti: string;
   role: string;
 };
+
+export const defaultToken: TokenModel = {
+  exp: 0,
+  iat: 0,
+  jti: "",
+  role: "",
+};

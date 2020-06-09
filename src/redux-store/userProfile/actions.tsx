@@ -12,19 +12,20 @@ import { getAll as getVehicles } from "../../data/services/vehicleService";
 import { AuthenticationModel } from "../../data/models/AuthenticationModel";
 import jwtDecode from "jwt-decode";
 import { TokenModel } from "./../../data/models/TokenModel";
+import { TOKEN_IN_LOCAL_STORAGE } from "./../../shared/constants";
 
 export function authenticateUser(authenticationModel: AuthenticationModel) {
   return async (dispatch: any) => {
     const { data } = await authenticate(authenticationModel);
+    localStorage.setItem(TOKEN_IN_LOCAL_STORAGE, data);
 
     const decodedToken = jwtDecode(data) as TokenModel;
-
-    dispatch(fetchCurrentUser(parseInt(decodedToken.jti)));
-    return dispatch({ type: AUTHENTICATE_USER, payload: data });
+    return dispatch({ type: AUTHENTICATE_USER, payload: decodedToken });
   };
 }
 
 export function unauthenticateUser() {
+  localStorage.removeItem(TOKEN_IN_LOCAL_STORAGE);
   return { type: UNAUTHENTICATE_USER };
 }
 

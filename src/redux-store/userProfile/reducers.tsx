@@ -9,12 +9,18 @@ import {
 import { AuthenticationState } from "./types";
 import { defaultUser } from "../../data/models/User";
 import { defaultUserSignedContract } from "../../data/models/UserSignedContract";
+import { defaultToken } from "../../data/models/TokenModel";
+import { TOKEN_IN_LOCAL_STORAGE } from "../../shared/constants";
+import jwtDecode from "jwt-decode";
+
+const tokenFromStorage = localStorage.getItem(TOKEN_IN_LOCAL_STORAGE);
 
 const initialState: AuthenticationState = {
   currentUser: defaultUser,
   sellingInfo: defaultUserSignedContract,
   soldCars: [],
-  isAuthenticated: false,
+  token: tokenFromStorage ? jwtDecode(tokenFromStorage) : defaultToken,
+  isAuthenticated: localStorage.getItem("token") ? true : false,
 };
 
 function userProfileReducer(
@@ -23,7 +29,7 @@ function userProfileReducer(
 ): AuthenticationState {
   switch (action.type) {
     case AUTHENTICATE_USER:
-      return { ...state, isAuthenticated: true };
+      return { ...state, token: action.payload, isAuthenticated: true };
     case UNAUTHENTICATE_USER:
       return { ...state, isAuthenticated: false };
     case FETCH_CURRENT_USER:
