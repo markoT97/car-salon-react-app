@@ -126,19 +126,19 @@ export default function PrimarySearchAppBar(props: Props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  /*
   const profileGuestNavigationItems = [
     { title: "Log In", icon: "power", route: "/login" },
     { title: "Register", icon: "power", route: "/register" },
   ];
-  */
 
+  /*
   const profileUserNavigationItems = [
     { title: "Profile", icon: "power", route: "/my-profile" },
     { title: "Settings", icon: "settings", route: "/settings" },
     { title: "Dashboard", icon: "power", route: "/dashboard" },
     { title: "Logout", icon: "power", route: "/" },
   ];
+  */
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -151,7 +151,7 @@ export default function PrimarySearchAppBar(props: Props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {profileUserNavigationItems.map((item, i) => {
+      {profileGuestNavigationItems.map((item, i) => {
         return (
           <MenuItem key={i} component={Link} to={item.route}>
             {item.title}

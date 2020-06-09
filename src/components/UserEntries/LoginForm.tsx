@@ -9,6 +9,11 @@ import {
   TextField,
 } from "@material-ui/core";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { loginValidationSchema } from "../../shared/validation-schemas";
+import { authenticateUser } from "../../redux-store/userProfile/actions";
+import { AuthenticationModel } from "../../data/models/AuthenticationModel";
 
 /*
 function Copyright() {
@@ -45,9 +50,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LogIn() {
+const LogInForm = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginValidationSchema,
+    onSubmit: (values: AuthenticationModel) => {
+      dispatch(authenticateUser(values));
+    },
+  });
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -58,7 +74,7 @@ function LogIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={formik.handleSubmit} className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -69,7 +85,12 @@ function LogIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            error={formik.touched.email && formik.errors.email ? true : false}
+            helperText={formik.touched.email && formik.errors.email}
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -80,7 +101,14 @@ function LogIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            error={
+              formik.touched.password && formik.errors.password ? true : false
+            }
+            helperText={formik.touched.password && formik.errors.password}
           />
+
           <Button
             type="submit"
             fullWidth
@@ -94,6 +122,6 @@ function LogIn() {
       </div>
     </Container>
   );
-}
+};
 
-export default LogIn;
+export default LogInForm;

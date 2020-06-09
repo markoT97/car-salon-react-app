@@ -20,8 +20,8 @@ function SellerInfo() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const authentication = useSelector((state: AppState) => state.authentication);
-  const { sellingInfo } = authentication;
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { sellingInfo } = userProfile;
 
   useEffect(() => {
     dispatch(fetchUserSellingInfo(1));

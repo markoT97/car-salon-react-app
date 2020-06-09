@@ -26,8 +26,8 @@ function UserOverview() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const authentication = useSelector((state: AppState) => state.authentication);
-  const { currentUser } = authentication;
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { currentUser } = userProfile;
 
   useEffect(() => {
     dispatch(fetchCurrentUser(1));

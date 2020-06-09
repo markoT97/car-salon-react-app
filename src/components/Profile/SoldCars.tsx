@@ -29,8 +29,8 @@ function SoldCars() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const authentication = useSelector((state: AppState) => state.authentication);
-  const { soldCars } = authentication;
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { soldCars } = userProfile;
 
   useEffect(() => {
     dispatch(fetchCarsSoldByUser(1));

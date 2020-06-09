@@ -3,6 +3,8 @@ import {
   AuthenticationActionTypes,
   FETCH_USER_SELLING_INFO,
   FETCH_CARS_SOLD_BY_USER,
+  AUTHENTICATE_USER,
+  UNAUTHENTICATE_USER,
 } from "./types";
 import { AuthenticationState } from "./types";
 import { defaultUser } from "../../data/models/User";
@@ -12,13 +14,18 @@ const initialState: AuthenticationState = {
   currentUser: defaultUser,
   sellingInfo: defaultUserSignedContract,
   soldCars: [],
+  isAuthenticated: false,
 };
 
-function authenticationReducer(
+function userProfileReducer(
   state = initialState,
   action: AuthenticationActionTypes
 ): AuthenticationState {
   switch (action.type) {
+    case AUTHENTICATE_USER:
+      return { ...state, isAuthenticated: true };
+    case UNAUTHENTICATE_USER:
+      return { ...state, isAuthenticated: false };
     case FETCH_CURRENT_USER:
       return { ...state, currentUser: action.payload };
     case FETCH_USER_SELLING_INFO:
@@ -30,4 +37,4 @@ function authenticationReducer(
   }
 }
 
-export default authenticationReducer;
+export default userProfileReducer;
