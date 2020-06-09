@@ -1,6 +1,6 @@
 import { FETCH_VEHICLES, SELECT_VEHICLE } from "./types";
 import { Vehicle } from "../../data/models/Vehicle";
-import { getAll as getCars } from "../../data/services/vehicleModelService";
+import { getAll as getCars } from "../../data/services/vehicleService";
 import { getAll as getImages } from "../../data/services/imageService";
 import { defaultImage } from "./../../data/models/Image";
 

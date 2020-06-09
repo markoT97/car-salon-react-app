@@ -5,7 +5,7 @@ import {
 } from "./types";
 import { get as getUser } from "../../data/services/userService";
 import { getAll as getUserSignedContracts } from "../../data/services/userSignedContractService";
-import { getAll as getVehicles } from "../../data/services/vehicleModelService";
+import { getAll as getVehicles } from "../../data/services/vehicleService";
 
 export function fetchCurrentUser(userId: number) {
   return async (dispatch: any) => {

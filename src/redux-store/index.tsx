@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import vehicleListReducer from "./vehicleList/reducers";
 import vehicleListFiltersReducer from "./vehicleListFilters/reducers";
-import authenticationReducer from "./authentication/reducers";
+import authenticationReducer from "./userProfile/reducers";
 
 const rootReducer = combineReducers({
   vehicleList: vehicleListReducer,

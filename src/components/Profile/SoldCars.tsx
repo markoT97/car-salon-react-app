@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCarsSoldByUser } from "../../redux-store/authentication/actions";
+import { fetchCarsSoldByUser } from "../../redux-store/userProfile/actions";
 import { AppState } from "../../redux-store";
 import { Vehicle } from "../../data/models/Vehicle";
 import { defaultImage } from "../../data/models/Image";

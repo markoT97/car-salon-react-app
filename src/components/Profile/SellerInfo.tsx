@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
-import { fetchUserSellingInfo } from "../../redux-store/authentication/actions";
+import { fetchUserSellingInfo } from "../../redux-store/userProfile/actions";
 
 const useStyles = makeStyles((theme) => ({
   userInfo: {
