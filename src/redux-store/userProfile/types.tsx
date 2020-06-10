@@ -3,7 +3,7 @@ import { UserSignedContract } from "../../data/models/UserSignedContract";
 import { Vehicle } from "../../data/models/Vehicle";
 import { TokenModel } from "../../data/models/TokenModel";
 
-export interface AuthenticationState {
+export interface UserProfileState {
   currentUser: User;
   sellingInfo: UserSignedContract;
   soldCars: Array<Vehicle>;
@@ -41,7 +41,7 @@ interface FetchCarsSoldByUserAction {
   payload: Array<Vehicle>;
 }
 
-export type AuthenticationActionTypes =
+export type UserProfileStateActionTypes =
   | AuthenticateUserAction
   | UnauthenticateUserAction
   | FetchCurrentUserAction
