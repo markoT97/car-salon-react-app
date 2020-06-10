@@ -11,6 +11,10 @@ import {
 } from "@material-ui/core";
 
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
+import { useFormik } from "formik";
+import { RegisterModel } from "./../../data/models/RegisterModel";
+import { registerValidationSchema } from "../../shared/validation-schemas";
+import { post } from "../../data/services/userService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +36,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RegisterForm() {
+const RegisterForm = () => {
   const classes = useStyles();
+
+  const formik = useFormik({
+    initialValues: {
+      jmbg: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+      password: "",
+    },
+    validationSchema: registerValidationSchema,
+    onSubmit: (values: RegisterModel) => {
+      console.log(values);
+      post(values);
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,8 +65,24 @@ function RegisterForm() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={formik.handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="jmbg"
+                name="jmbg"
+                variant="outlined"
+                required
+                fullWidth
+                id="jmbg"
+                label="JMBG"
+                autoFocus
+                onChange={formik.handleChange}
+                value={formik.values.jmbg}
+                error={formik.touched.jmbg && formik.errors.jmbg ? true : false}
+                helperText={formik.touched.jmbg && formik.errors.jmbg}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
@@ -57,6 +93,14 @@ function RegisterForm() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={formik.handleChange}
+                value={formik.values.firstName}
+                error={
+                  formik.touched.firstName && formik.errors.firstName
+                    ? true
+                    : false
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -68,6 +112,14 @@ function RegisterForm() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={formik.handleChange}
+                value={formik.values.lastName}
+                error={
+                  formik.touched.lastName && formik.errors.lastName
+                    ? true
+                    : false
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -79,6 +131,29 @@ function RegisterForm() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                error={
+                  formik.touched.email && formik.errors.email ? true : false
+                }
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="address"
+                label="Address"
+                name="address"
+                autoComplete="address"
+                onChange={formik.handleChange}
+                value={formik.values.address}
+                error={
+                  formik.touched.address && formik.errors.address ? true : false
+                }
+                helperText={formik.touched.address && formik.errors.address}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +166,14 @@ function RegisterForm() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && formik.errors.password
+                    ? true
+                    : false
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
           </Grid>
@@ -107,6 +190,6 @@ function RegisterForm() {
       </div>
     </Container>
   );
-}
+};
 
 export default RegisterForm;
