@@ -1,7 +1,7 @@
 export type User = {
   userId: number;
   role: string;
-  JMBG: string;
+  jmbg: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -13,7 +13,7 @@ export type User = {
 export const defaultUser: User = {
   userId: 0,
   role: "",
-  JMBG: "",
+  jmbg: "",
   email: "",
   firstName: "",
   lastName: "",
