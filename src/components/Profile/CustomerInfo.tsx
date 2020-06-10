@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
 import { fetchUserSellingInfo } from "../../redux-store/userProfile/actions";
@@ -16,12 +16,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const defaultProps = {
+  bgcolor: "background.paper",
+  borderColor: "text.primary",
+  m: 1,
+  border: 1,
+};
+
 function SellerInfo() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { currentUser, sellingInfo } = userProfile;
+  const { currentUser, customerInfo } = userProfile;
 
   useEffect(() => {
     dispatch(fetchUserSellingInfo(currentUser.userId));
@@ -44,24 +51,16 @@ function SellerInfo() {
         >
           <Grid item xs={12}>
             <Typography noWrap={true} variant="h3" color="primary">
-              {sellingInfo.numberOfSoldCars}
+              <Box borderRadius={20} {...defaultProps}>
+                {customerInfo.numberOfBoughtCars}
+              </Box>
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography className={classes.sellerInfo}>Sold cars</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item md={3}>
-        <Grid container>
-          <Grid item md={12}>
-            <Typography noWrap={true} variant="h3" color="primary">
-              {sellingInfo.currency + " " + sellingInfo.totalEarnedMoney}
+            <Typography className={classes.sellerInfo}>
+              Number of bought cars
             </Typography>
           </Grid>
-        </Grid>
-        <Grid item md={12} className={classes.sellerInfo}>
-          <Typography className={classes.sellerInfo}>Earned money</Typography>
         </Grid>
       </Grid>
     </Grid>

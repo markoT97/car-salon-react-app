@@ -1,11 +1,9 @@
 import API from "./../../utils/API";
 
-export async function getAll(userId?: number, jmbg?: string, brandId?: number) {
+export async function getAll(userId?: number) {
   var config = {
     params: {
       user_id: userId ? userId : undefined,
-      jmbg: jmbg ? jmbg : undefined,
-      brand_id: brandId ? brandId : undefined,
     },
   };
 

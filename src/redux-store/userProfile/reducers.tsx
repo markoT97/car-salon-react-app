@@ -17,8 +17,8 @@ const tokenFromStorage = localStorage.getItem(TOKEN_IN_LOCAL_STORAGE);
 
 const initialState: UserProfileState = {
   currentUser: defaultUser,
-  sellingInfo: defaultUserSignedContract,
-  soldCars: [],
+  customerInfo: defaultUserSignedContract,
+  boughtCars: [],
   token: tokenFromStorage ? jwtDecode(tokenFromStorage) : defaultToken,
   isAuthenticated: localStorage.getItem("token") ? true : false,
 };
@@ -35,9 +35,9 @@ function userProfileReducer(
     case FETCH_CURRENT_USER:
       return { ...state, currentUser: action.payload };
     case FETCH_USER_SELLING_INFO:
-      return { ...state, sellingInfo: action.payload };
+      return { ...state, customerInfo: action.payload };
     case FETCH_CARS_SOLD_BY_USER:
-      return { ...state, soldCars: action.payload };
+      return { ...state, boughtCars: action.payload };
     default:
       return state;
   }

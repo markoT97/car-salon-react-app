@@ -42,7 +42,7 @@ export function fetchUserSellingInfo(userId: number) {
     const { data: userContracts } = await getUserSignedContracts(userId);
     return dispatch({
       type: FETCH_USER_SELLING_INFO,
-      payload: userContracts,
+      payload: userContracts[0],
     });
   };
 }
