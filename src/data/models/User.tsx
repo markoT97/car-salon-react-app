@@ -6,7 +6,7 @@ export type User = {
   firstName: string;
   lastName: string;
   address: string;
-  imagePath: string;
+  imagePath?: string | undefined;
   password: string;
 };
 

@@ -14,6 +14,14 @@ export const registerValidationSchema = Yup.object({
   password: Yup.string().label("Password").required(),
 });
 
+export const updateValidationSchema = Yup.object({
+  firstName: Yup.string().label("First name").required(),
+  lastName: Yup.string().label("Last name").required(),
+  email: Yup.string().email().label("Email").required(),
+  address: Yup.string().label("Address").required(),
+  password: Yup.string().label("Password").required(),
+});
+
 export const purchaseNaturalPersonValidationSchema = Yup.object({
   carType: Yup.string().label("Car type").required(),
   address: Yup.string().label("Address").required(),

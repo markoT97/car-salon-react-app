@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CssBaseline, Button, Paper, Typography } from "@material-ui/core";
+import { CssBaseline, Paper, Typography } from "@material-ui/core";
 import DataForm from "./DataForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
 function Index() {
   const classes = useStyles();
 
-  const handleSave = () => {};
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -51,21 +49,7 @@ function Index() {
             Update user's data
           </Typography>
 
-          <React.Fragment>
-            <React.Fragment>
-              <DataForm />;
-              <div className={classes.buttons}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSave}
-                  className={classes.button}
-                >
-                  Save
-                </Button>
-              </div>
-            </React.Fragment>
-          </React.Fragment>
+          <DataForm />
         </Paper>
       </main>
     </React.Fragment>

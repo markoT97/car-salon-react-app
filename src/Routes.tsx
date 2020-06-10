@@ -7,7 +7,7 @@ import Contact from "./components/Contact";
 import RegisterForm from "./components/UserEntries/RegisterForm";
 import LoginForm from "./components/UserEntries/LoginForm";
 import Profile from "./components/Profile";
-import Settings from "./components/Settings";
+import UpdateProfileData from "./components/UpdateProfileData";
 import Dashboard from "./components/Dashboard";
 
 function Routes() {
@@ -20,7 +20,7 @@ function Routes() {
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/login" component={LoginForm} />
       <Route exact path="/my-profile" component={Profile} />
-      <Route exact path="/settings" component={Settings} />
+      <Route exact path="/settings" component={UpdateProfileData} />
       <Route exact path="/dashboard" component={Dashboard} />
     </Switch>
   );
