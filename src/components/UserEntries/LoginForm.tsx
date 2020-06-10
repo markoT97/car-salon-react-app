@@ -115,6 +115,7 @@ const LogInForm = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!(formik.isValid && formik.dirty)}
           >
             Sign In
           </Button>

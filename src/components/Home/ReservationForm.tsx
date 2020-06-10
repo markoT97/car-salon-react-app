@@ -329,6 +329,7 @@ const ReservationForm = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!(formik.isValid && formik.dirty)}
           >
             Purchase
           </Button>
