@@ -40,7 +40,10 @@ export function fetchCurrentUser(userId: number) {
 export function fetchUserSellingInfo(userId: number) {
   return async (dispatch: any) => {
     const { data: userContracts } = await getUserSignedContracts(userId);
-    return dispatch({ type: FETCH_USER_SELLING_INFO, payload: userContracts });
+    return dispatch({
+      type: FETCH_USER_SELLING_INFO,
+      payload: userContracts,
+    });
   };
 }
 
