@@ -6,6 +6,14 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux-store";
+import API from "./utils/API";
+import { TOKEN_IN_LOCAL_STORAGE } from "./shared/constants";
+
+API.interceptors.request.use(function (config) {
+  config.headers.Authorization = localStorage.getItem(TOKEN_IN_LOCAL_STORAGE);
+
+  return config;
+});
 
 ReactDOM.render(
   <React.StrictMode>
