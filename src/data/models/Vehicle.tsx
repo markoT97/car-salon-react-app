@@ -3,6 +3,7 @@ import { defaultImage } from "./Image";
 
 export type Vehicle = {
   carId: number;
+  customerId?: number;
   chassisNumber: string;
   yearOfProduction: number;
   brandId: number;

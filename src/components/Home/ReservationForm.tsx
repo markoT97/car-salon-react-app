@@ -17,7 +17,10 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVehicles } from "../../redux-store/vehicleList/actions";
+import {
+  fetchVehicles,
+  purchaseVehicle,
+} from "../../redux-store/vehicleList/actions";
 import { AppState } from "../../redux-store";
 import { Vehicle } from "../../data/models/Vehicle";
 import { useFormik } from "formik";
@@ -25,14 +28,6 @@ import {
   purchaseNaturalPersonValidationSchema,
   purchaseLegalEntityValidationSchema,
 } from "../../shared/validation-schemas";
-import { NaturalPerson } from "../../data/models/NaturalPerson";
-import { LegalEntity } from "../../data/models/LegalEntity";
-import {
-  postNaturalPerson,
-  postLegalEntity,
-  postCustomer,
-} from "./../../data/services/customerService";
-import { Customer } from "../../data/models/Customer";
 
 const genders = [
   {
@@ -70,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 const ReservationForm = () => {
   const classes = useStyles();
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
-  const { vehicles } = vehicleList;
+  const { vehicles, selectedVehicle } = vehicleList;
 
   const dispatch = useDispatch();
 
@@ -115,19 +110,7 @@ const ReservationForm = () => {
     onSubmit: (values: any) => {
       console.log(values);
 
-      if (customerType === "naturalPerson") {
-        postNaturalPerson(values as NaturalPerson).then(() => {
-          const customer = values as Customer;
-          customer.pib = undefined;
-          postCustomer(customer);
-        });
-      } else {
-        postLegalEntity(values as LegalEntity).then(() => {
-          const customer = values as Customer;
-          customer.jmbg = undefined;
-          postCustomer(customer);
-        });
-      }
+      dispatch(purchaseVehicle(selectedVehicle, customerType, values));
     },
   });
 
@@ -273,6 +256,7 @@ const ReservationForm = () => {
                   name: "carType",
                   id: "outlined-car-type-native-simple",
                 }}
+                defaultValue={selectedVehicle.carId}
                 onChange={formik.handleChange}
                 error={
                   formik.touched.carType && formik.errors.carType ? true : false

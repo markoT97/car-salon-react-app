@@ -15,6 +15,7 @@ import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
+import { useHistory } from "react-router-dom";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -64,6 +65,8 @@ function VehicleInfo() {
   const selectedVehicle = useSelector(
     (state: AppState) => state.vehicleList.selectedVehicle
   );
+
+  const history = useHistory();
 
   return (
     <>
@@ -152,7 +155,12 @@ function VehicleInfo() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button fullWidth variant="contained" color="primary">
+      <Button
+        onClick={() => history.push("/")}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
         Purchase
       </Button>
     </>

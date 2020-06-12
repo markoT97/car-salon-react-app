@@ -1,4 +1,5 @@
 import API from "./../../utils/API";
+import { Vehicle } from "../models/Vehicle";
 
 export async function getAll(
   brandId?: number,
@@ -18,4 +19,8 @@ export async function getAll(
   };
 
   return await API.get("/cars", config);
+}
+
+export async function put(vehicle: Vehicle) {
+  return await API.put("/cars", vehicle);
 }

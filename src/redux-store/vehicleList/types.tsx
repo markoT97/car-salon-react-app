@@ -7,6 +7,7 @@ export interface VehicleListState {
 
 export const FETCH_VEHICLES = "FETCH_VEHICLES";
 export const SELECT_VEHICLE = "SELECT_VEHICLE";
+export const PURCHASE_VEHICLE = "PURCHASE_VEHICLE";
 
 interface FetchVehiclesAction {
   type: typeof FETCH_VEHICLES;
@@ -18,4 +19,12 @@ interface SelectVehicleAction {
   payload: Vehicle;
 }
 
-export type VehicleListActionTypes = FetchVehiclesAction | SelectVehicleAction;
+interface PurchaseVehicleAction {
+  type: typeof PURCHASE_VEHICLE;
+  payload: number;
+}
+
+export type VehicleListActionTypes =
+  | FetchVehiclesAction
+  | SelectVehicleAction
+  | PurchaseVehicleAction;
