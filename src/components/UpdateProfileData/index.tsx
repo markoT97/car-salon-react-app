@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CssBaseline, Paper, Typography } from "@material-ui/core";
+import { CssBaseline, Paper, Typography, Container } from "@material-ui/core";
 import DataForm from "./DataForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
@@ -41,18 +44,17 @@ function Index() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Update user's data
-          </Typography>
 
-          <DataForm />
-        </Paper>
-      </main>
-    </React.Fragment>
+      <Paper className={classes.paper}>
+        <Typography component="h1" variant="h4" align="center">
+          Update user's data
+        </Typography>
+
+        <DataForm />
+      </Paper>
+    </Container>
   );
 }
 

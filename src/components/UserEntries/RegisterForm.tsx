@@ -8,6 +8,7 @@ import {
   Button,
   CssBaseline,
   TextField,
+  Paper,
 } from "@material-ui/core";
 
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
@@ -18,7 +19,14 @@ import { post } from "../../data/services/userService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -58,7 +66,7 @@ const RegisterForm = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -188,7 +196,7 @@ const RegisterForm = () => {
             Sign Up
           </Button>
         </form>
-      </div>
+      </Paper>
     </Container>
   );
 };
