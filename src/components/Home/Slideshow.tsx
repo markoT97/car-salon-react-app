@@ -38,13 +38,13 @@ function Slideshow() {
   const classes = useStyles();
   var items = [
     {
-      name: "Random Name #1",
-      description: "Probably the most random thing!",
+      name: "GET 15% OFF YOUR RENTAL",
+      description: "Plan your trip now",
       image: "http://carrental.themeinjection.com/theme/img/car1.png",
     },
     {
-      name: "Random Name #2",
-      description: "Hello World!",
+      name: "LUXURY CAR FROM FROM $28 PER WEEK",
+      description: "Treat yourself",
       image: "http://carrental.themeinjection.com/theme/img/car2.png",
     },
   ];

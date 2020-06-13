@@ -53,9 +53,7 @@ export function purchaseVehicle(
   return async (dispatch: any) => {
     if (!isOldUser) {
       if (customerType === "naturalPerson") {
-        const { data: newNaturalPerson } = await postNaturalPerson(
-          formData as NaturalPerson
-        );
+        await postNaturalPerson(formData as NaturalPerson);
 
         const customer = formData as Customer;
         customer.pib = undefined;
@@ -65,9 +63,7 @@ export function purchaseVehicle(
 
         await put(vehicle);
       } else {
-        const { data: newLegalEntity } = await postLegalEntity(
-          formData as LegalEntity
-        );
+        await postLegalEntity(formData as LegalEntity);
 
         const customer = formData as Customer;
         customer.jmbg = undefined;
