@@ -7,6 +7,8 @@ import CustomerInfo from "./CustomerInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
 import { fetchCurrentUser } from "../../redux-store/userProfile/actions";
+import CarsWithoutContract from "./CarsWithoutContract";
+import { Receipt } from "@material-ui/icons";
 
 /*
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,13 @@ function Index() {
         </Grid>
         <Grid item xs={12}>
           <Divider />
+        </Grid>
+        <Grid item xs={12}>
+          <h1>
+            <Receipt /> &nbsp;Cars waiting for contract
+          </h1>
+
+          <CarsWithoutContract />
         </Grid>
         <Grid item>
           <BoughtCars />

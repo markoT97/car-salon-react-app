@@ -7,6 +7,7 @@ export interface UserProfileState {
   currentUser: User;
   customerInfo: UserSignedContract;
   boughtCars: Array<Vehicle>;
+  carsWithoutContracts: Array<Vehicle>;
   token: TokenModel;
   isAuthenticated: Boolean;
 }
@@ -16,6 +17,9 @@ export const UNAUTHENTICATE_USER = "UNAUTHENTICATE_USER";
 export const FETCH_CURRENT_USER = "FETCH_CURRENT_USER";
 export const FETCH_USER_SELLING_INFO = "FETCH_USER_SELLING_INFO";
 export const FETCH_CARS_SOLD_BY_USER = "FETCH_CARS_SOLD_BY_USER";
+
+export const FETCH_CARS_WITHOUT_CONTRACT = "FETCH_CARS_WITHOUT_CONTRACT";
+export const SIGN_CONTRACT_FOR_CAR = "SIGN_CONTRACT_FOR_CAR";
 
 interface AuthenticateUserAction {
   type: typeof AUTHENTICATE_USER;
@@ -41,9 +45,21 @@ interface FetchCarsSoldByUserAction {
   payload: Array<Vehicle>;
 }
 
+interface FetchCarsWithoutContractAction {
+  type: typeof FETCH_CARS_WITHOUT_CONTRACT;
+  payload: Array<Vehicle>;
+}
+
+interface SelectCarForSigningContractAction {
+  type: typeof SIGN_CONTRACT_FOR_CAR;
+  payload: UserSignedContract;
+}
+
 export type UserProfileStateActionTypes =
   | AuthenticateUserAction
   | UnauthenticateUserAction
   | FetchCurrentUserAction
   | FetchUserSellingInfoAction
-  | FetchCarsSoldByUserAction;
+  | FetchCarsSoldByUserAction
+  | FetchCarsWithoutContractAction
+  | SelectCarForSigningContractAction;

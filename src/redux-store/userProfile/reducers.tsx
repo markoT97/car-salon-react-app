@@ -5,6 +5,8 @@ import {
   FETCH_CARS_SOLD_BY_USER,
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
+  FETCH_CARS_WITHOUT_CONTRACT,
+  SIGN_CONTRACT_FOR_CAR,
 } from "./types";
 import { UserProfileState } from "./types";
 import { defaultUser } from "../../data/models/User";
@@ -19,6 +21,7 @@ const initialState: UserProfileState = {
   currentUser: defaultUser,
   customerInfo: defaultUserSignedContract,
   boughtCars: [],
+  carsWithoutContracts: [],
   token: tokenFromStorage ? jwtDecode(tokenFromStorage) : defaultToken,
   isAuthenticated: tokenFromStorage ? true : false,
 };
@@ -39,6 +42,21 @@ function userProfileReducer(
       return { ...state, customerInfo: action.payload };
     case FETCH_CARS_SOLD_BY_USER:
       return { ...state, boughtCars: action.payload };
+    case FETCH_CARS_WITHOUT_CONTRACT:
+      return { ...state, carsWithoutContracts: action.payload };
+    case SIGN_CONTRACT_FOR_CAR:
+      return {
+        ...state,
+        carsWithoutContracts: state.carsWithoutContracts.filter(
+          (car) => car.carId !== action.payload.carId
+        ),
+        customerInfo: {
+          ...state.customerInfo,
+          numberOfBoughtCars: state.customerInfo.numberOfBoughtCars
+            ? state.customerInfo.numberOfBoughtCars + 1
+            : undefined,
+        },
+      };
     default:
       return state;
   }

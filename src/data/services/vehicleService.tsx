@@ -21,6 +21,20 @@ export async function getAll(
   return await API.get("/cars", config);
 }
 
+export async function getAllWaitingContract(
+  brandId?: number,
+  customerId?: number
+) {
+  var config = {
+    params: {
+      brand_id: brandId ? brandId : undefined,
+      customer_id: customerId ? customerId : undefined,
+    },
+  };
+
+  return await API.get("/cars-waiting-contracts", config);
+}
+
 export async function put(vehicle: Vehicle) {
   return await API.put("/cars", vehicle);
 }
