@@ -142,7 +142,7 @@ export default function PrimarySearchAppBar(props: Props) {
   const profileUserNavigationItems = [
     { title: "Profile", icon: "power", route: "/my-profile" },
     { title: "Settings", icon: "settings", route: "/settings" },
-    { title: "Dashboard", icon: "power", route: "/dashboard" },
+    //{ title: "Dashboard", icon: "power", route: "/dashboard" },
     { title: "Logout", icon: "power", route: "/", logout: true },
   ];
 

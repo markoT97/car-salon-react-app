@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -11,10 +11,12 @@ import {
 } from "@material-ui/core";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginValidationSchema } from "../../shared/validation-schemas";
 import { authenticateUser } from "../../redux-store/userProfile/actions";
 import { AuthenticationModel } from "../../data/models/AuthenticationModel";
+import { AppState } from "../../redux-store";
+import { useHistory } from "react-router";
 
 /*
 function Copyright() {
@@ -62,6 +64,11 @@ const LogInForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const userProfile = useSelector((state: AppState) => state.userProfile);
+  const { isAuthenticated } = userProfile;
+
+  const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -72,6 +79,13 @@ const LogInForm = () => {
       dispatch(authenticateUser(values));
     },
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("my-profile");
+    }
+  }, [history, isAuthenticated]);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

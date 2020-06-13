@@ -9,7 +9,7 @@ import RegisterForm from "./components/UserEntries/RegisterForm";
 import LoginForm from "./components/UserEntries/LoginForm";
 import Profile from "./components/Profile";
 import UpdateProfileData from "./components/UpdateProfileData";
-import Dashboard from "./components/Dashboard";
+//import Dashboard from "./components/Dashboard";
 import getIsLoggedIn from "./utils/getIsLoggedIn";
 import Loading from "./containers/Loading";
 import NotFound from "./containers/NotFound";
@@ -41,8 +41,12 @@ function Routes() {
           component={Profile}
           meta={{ auth: true }}
         />
-        <GuardedRoute exact path="/settings" component={UpdateProfileData} />
-        <GuardedRoute exact path="/dashboard" component={Dashboard} />
+        <GuardedRoute
+          exact
+          path="/settings"
+          component={UpdateProfileData}
+          meta={{ auth: true }}
+        />
         <GuardedRoute path="*" component={NotFound} />
       </Switch>
     </GuardProvider>
