@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { Container, Grid, Divider } from "@material-ui/core";
 import UserOverview from "./UserOverview";
 import UserDescription from "./UserDescription";
-import BoughtCars from "./BoughtCars";
-import CustomerInfo from "./CustomerInfo";
+import SoldCars from "./SoldCars";
+import SellerInfo from "./SellerInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
 import { fetchCurrentUser } from "../../redux-store/userProfile/actions";
-import CarsWithoutContract from "./CarsWithoutContract";
+import CarsWithoutContract from "./CarsWithoutContracts";
 import { Receipt } from "@material-ui/icons";
 
 /*
@@ -46,7 +46,7 @@ function Index() {
           <UserOverview />
         </Grid>
         <Grid item xs={12}>
-          <CustomerInfo />
+          <SellerInfo />
         </Grid>
         <Grid item>
           <UserDescription />
@@ -62,7 +62,7 @@ function Index() {
           <CarsWithoutContract />
         </Grid>
         <Grid item>
-          <BoughtCars />
+          <SoldCars />
         </Grid>
       </Grid>
     </Container>

@@ -21,7 +21,7 @@ import { AppState } from "../../redux-store";
 import {
   fetchCarsWithoutContracts,
   selectCarsForSign,
-} from "./../../redux-store/userProfile/actions";
+} from "../../redux-store/userProfile/actions";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({

@@ -30,7 +30,7 @@ function SoldCars() {
   const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { currentUser, boughtCars } = userProfile;
+  const { currentUser, soldCars } = userProfile;
 
   useEffect(() => {
     dispatch(fetchCarsSoldByUser(currentUser.userId));
@@ -39,7 +39,7 @@ function SoldCars() {
     <>
       <h2 className={classes.heading}>Recently bought cars</h2>
       <Grid container alignItems="center" justify="center" spacing={1}>
-        {boughtCars.map((car: Vehicle, i: number) => {
+        {soldCars.map((car: Vehicle, i: number) => {
           return (
             <Grid item key={i} md={4}>
               <Card className={classes.card}>

@@ -19,8 +19,8 @@ const tokenFromStorage = localStorage.getItem(TOKEN_IN_LOCAL_STORAGE);
 
 const initialState: UserProfileState = {
   currentUser: defaultUser,
-  customerInfo: defaultUserSignedContract,
-  boughtCars: [],
+  sellerInfo: defaultUserSignedContract,
+  soldCars: [],
   carsWithoutContracts: [],
   token: tokenFromStorage ? jwtDecode(tokenFromStorage) : defaultToken,
   isAuthenticated: tokenFromStorage ? true : false,
@@ -39,9 +39,9 @@ function userProfileReducer(
     case FETCH_CURRENT_USER:
       return { ...state, currentUser: action.payload };
     case FETCH_USER_SELLING_INFO:
-      return { ...state, customerInfo: action.payload };
+      return { ...state, sellerInfo: action.payload };
     case FETCH_CARS_SOLD_BY_USER:
-      return { ...state, boughtCars: action.payload };
+      return { ...state, soldCars: action.payload };
     case FETCH_CARS_WITHOUT_CONTRACT:
       return { ...state, carsWithoutContracts: action.payload };
     case SIGN_CONTRACT_FOR_CAR:
@@ -50,10 +50,10 @@ function userProfileReducer(
         carsWithoutContracts: state.carsWithoutContracts.filter(
           (car) => car.carId !== action.payload.carId
         ),
-        customerInfo: {
-          ...state.customerInfo,
-          numberOfBoughtCars: state.customerInfo.numberOfBoughtCars
-            ? state.customerInfo.numberOfBoughtCars + 1
+        sellerInfo: {
+          ...state.sellerInfo,
+          numberOfSignedContracts: state.sellerInfo.numberOfSignedContracts
+            ? state.sellerInfo.numberOfSignedContracts + 1
             : undefined,
         },
       };

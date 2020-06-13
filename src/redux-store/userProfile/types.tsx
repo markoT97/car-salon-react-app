@@ -5,8 +5,8 @@ import { TokenModel } from "../../data/models/TokenModel";
 
 export interface UserProfileState {
   currentUser: User;
-  customerInfo: UserSignedContract;
-  boughtCars: Array<Vehicle>;
+  sellerInfo: UserSignedContract;
+  soldCars: Array<Vehicle>;
   carsWithoutContracts: Array<Vehicle>;
   token: TokenModel;
   isAuthenticated: Boolean;

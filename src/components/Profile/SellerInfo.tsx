@@ -28,7 +28,7 @@ function SellerInfo() {
   const dispatch = useDispatch();
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { currentUser, customerInfo } = userProfile;
+  const { currentUser, sellerInfo } = userProfile;
 
   useEffect(() => {
     dispatch(fetchUserSellingInfo(currentUser.userId));
@@ -52,13 +52,13 @@ function SellerInfo() {
           <Grid item xs={12}>
             <Typography noWrap={true} variant="h3" color="primary">
               <Box borderRadius={20} {...defaultProps}>
-                {customerInfo.numberOfBoughtCars}
+                {sellerInfo.numberOfSignedContracts}
               </Box>
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography className={classes.sellerInfo}>
-              Number of bought cars
+              Number of signed contracts
             </Typography>
           </Grid>
         </Grid>

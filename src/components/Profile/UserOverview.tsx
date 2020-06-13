@@ -34,7 +34,9 @@ function UserOverview() {
         <h1 className={classes.userTitle}>
           {currentUser.firstName + " " + currentUser.lastName}
         </h1>
-        <h4 className={classes.userType}>{currentUser.role}</h4>
+        <h4 className={classes.userType}>
+          {currentUser.role === "User" ? "Seller" : "Unknown"}
+        </h4>
       </Grid>
     </Grid>
   );
