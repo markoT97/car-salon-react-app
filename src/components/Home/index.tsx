@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       flexGrow: 1,
       background: `linear-gradient(to bottom, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 50%, ${theme.palette.primary.main} 100%)`,
-      height: "40em",
+      height: "91vh",
       overflow: "hidden",
       padding: "2em",
       [theme.breakpoints.down("sm")]: {
-        height: "72em",
+        height: "75em",
       },
     },
   })
