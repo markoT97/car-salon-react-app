@@ -22,7 +22,7 @@ export const updateValidationSchema = Yup.object({
   password: Yup.string().label("Password").required(),
 });
 
-export const purchaseNaturalPersonValidationSchema = Yup.object({
+export const purchaseNewNaturalPersonValidationSchema = Yup.object({
   carType: Yup.string().label("Car type").required(),
   address: Yup.string().label("Address").required(),
   jmbg: Yup.number().label("JMBG").required(),
@@ -31,9 +31,19 @@ export const purchaseNaturalPersonValidationSchema = Yup.object({
   gender: Yup.string().label("Gender").max(1).required(),
 });
 
-export const purchaseLegalEntityValidationSchema = Yup.object({
+export const purchaseOldNaturalPersonValidationSchema = Yup.object({
+  carType: Yup.string().label("Car type").required(),
+  jmbg: Yup.number().label("JMBG").required(),
+});
+
+export const purchaseNewLegalEntityValidationSchema = Yup.object({
   carType: Yup.string().label("Car type").required(),
   address: Yup.string().label("Address").required(),
   pib: Yup.number().label("PIB").required(),
   name: Yup.string().label("Name").required(),
+});
+
+export const purchaseOldLegalEntityValidationSchema = Yup.object({
+  carType: Yup.string().label("Car type").required(),
+  pib: Yup.number().label("PIB").required(),
 });
