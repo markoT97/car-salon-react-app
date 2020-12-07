@@ -6,6 +6,7 @@ import VehicleInfo from "./VehicleInfo";
 import FilterData from "./FilterData";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux-store/index";
+import PurchaseConfirmationModal from "./PurchaseConfirmationModal";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +22,11 @@ function Index() {
 
   const vehicleList = useSelector((state: AppState) => state.vehicleList);
   const { image } = vehicleList.selectedVehicle;
+  const { selectedVehicle } = vehicleList;
+
+  const customerId = useSelector(
+    (state: AppState) => state.userProfile.currentUser.userId
+  );
 
   return (
     <>
@@ -45,6 +51,10 @@ function Index() {
           </Grid>
         </Grid>
       </Container>
+      <PurchaseConfirmationModal
+        selectedVehicle={selectedVehicle}
+        customerId={customerId}
+      />
     </>
   );
 }

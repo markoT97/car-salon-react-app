@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
 
 const useStyles = makeStyles((theme) => ({
-  userTitle: {},
+  userTitle: {
+    textAlign: "center",
+  },
   userType: {
     textAlign: "center",
     textTransform: "uppercase",
@@ -27,16 +29,22 @@ function UserOverview() {
   const userProfile = useSelector((state: AppState) => state.userProfile);
   const { currentUser } = userProfile;
 
+  const { role } = currentUser;
+
+  const getUserName = () => {
+    if (currentUser.firstName) {
+      return currentUser.firstName + " " + currentUser.lastName;
+    } else if (currentUser.companyName) {
+      return currentUser.companyName;
+    }
+  };
+
   return (
     <Grid container alignItems="center" justify="center">
       <Grid item>
         <Avatar className={classes.avatar} src={currentUser.imagePath} alt="" />
-        <h1 className={classes.userTitle}>
-          {currentUser.firstName + " " + currentUser.lastName}
-        </h1>
-        <h4 className={classes.userType}>
-          {currentUser.role === "User" ? "Seller" : "Unknown"}
-        </h4>
+        <h1 className={classes.userTitle}>{getUserName()}</h1>
+        <h4 className={classes.userType}>{role}</h4>
       </Grid>
     </Grid>
   );

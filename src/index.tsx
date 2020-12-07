@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux-store";
 import API from "./utils/API";
-import { TOKEN_IN_LOCAL_STORAGE } from "./shared/constants";
+import { TOKEN_IN_LOCAL_STORAGE } from "./shared/configuration";
 
 API.interceptors.request.use(function (config) {
   config.headers.Authorization = localStorage.getItem(TOKEN_IN_LOCAL_STORAGE);

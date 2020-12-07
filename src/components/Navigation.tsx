@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "none",
       },
     },
+    backToTopButton: {
+      zIndex: 2000,
+    },
   })
 );
 
@@ -103,6 +106,7 @@ function ScrollTop(props: Props) {
 
 export default function PrimarySearchAppBar(props: Props) {
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
     mobileMoreAnchorEl,
@@ -113,7 +117,7 @@ export default function PrimarySearchAppBar(props: Props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { isAuthenticated } = userProfile;
+  const { isAuthenticated, token } = userProfile;
 
   const dispatch = useDispatch();
 
@@ -136,7 +140,6 @@ export default function PrimarySearchAppBar(props: Props) {
 
   const profileGuestNavigationItems = [
     { title: "Log In", icon: "power", route: "/login" },
-    { title: "Register", icon: "power", route: "/register" },
   ];
 
   const profileUserNavigationItems = [
@@ -144,6 +147,11 @@ export default function PrimarySearchAppBar(props: Props) {
     { title: "Settings", icon: "settings", route: "/settings" },
     //{ title: "Dashboard", icon: "power", route: "/dashboard" },
     { title: "Logout", icon: "power", route: "/", logout: true },
+  ];
+
+  const profileAdminNavigationItems = [
+    { title: "Register seller", icon: "power", route: "/register" },
+    ...profileUserNavigationItems,
   ];
 
   const menuId = "primary-search-account-menu";
@@ -158,18 +166,31 @@ export default function PrimarySearchAppBar(props: Props) {
       onClose={handleMenuClose}
     >
       {isAuthenticated
-        ? profileUserNavigationItems.map((item, i) => {
-            return (
-              <MenuItem
-                key={i}
-                onClick={() => item.logout && dispatch(unauthenticateUser())}
-                component={Link}
-                to={item.route}
-              >
-                {item.title}
-              </MenuItem>
-            );
-          })
+        ? token.role === "Admin"
+          ? profileAdminNavigationItems.map((item, i) => {
+              return (
+                <MenuItem
+                  key={i}
+                  onClick={() => item.logout && dispatch(unauthenticateUser())}
+                  component={Link}
+                  to={item.route}
+                >
+                  {item.title}
+                </MenuItem>
+              );
+            })
+          : profileUserNavigationItems.map((item, i) => {
+              return (
+                <MenuItem
+                  key={i}
+                  onClick={() => item.logout && dispatch(unauthenticateUser())}
+                  component={Link}
+                  to={item.route}
+                >
+                  {item.title}
+                </MenuItem>
+              );
+            })
         : profileGuestNavigationItems.map((item, i) => {
             return (
               <MenuItem key={i} component={Link} to={item.route}>
@@ -221,7 +242,7 @@ export default function PrimarySearchAppBar(props: Props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed" elevation={0} color="secondary">
+      <AppBar position="fixed" elevation={0} color="inherit">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             Car Salon

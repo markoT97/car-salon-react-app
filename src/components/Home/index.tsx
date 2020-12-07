@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Slideshow from "./Slideshow";
 import { Grid } from "@material-ui/core";
-import ReservationForm from "./ReservationForm";
+import RegisterCustomerForm from "./RegisterCustomerForm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "hidden",
       padding: "2em",
       [theme.breakpoints.down("sm")]: {
-        height: "75em",
+        height: "79em",
       },
     },
   })
 );
 
-function Index() {
+function Home() {
   const classes = useStyles();
   return (
     <>
@@ -33,11 +33,11 @@ function Index() {
           <Slideshow />
         </Grid>
         <Grid item md={6}>
-          <ReservationForm />
+          <RegisterCustomerForm />
         </Grid>
       </Grid>
     </>
   );
 }
 
-export default Index;
+export default Home;

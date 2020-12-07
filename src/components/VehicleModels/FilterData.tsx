@@ -20,7 +20,7 @@ import {
   fetchModels,
   selectVehicleEngine,
   fetchEngines,
-  fetchSuppliers,
+  fetchAvailableSuppliers,
   selectVehicleSupplier,
 } from "../../redux-store/vehicleListFilters/actions";
 import { fetchVehicles } from "../../redux-store/vehicleList/actions";
@@ -139,7 +139,7 @@ function FilterData() {
     if (selectedBrand) {
       dispatch(fetchModels(selectedBrand.brandId));
       dispatch(fetchEngines(selectedBrand.brandId));
-      dispatch(fetchSuppliers(selectedBrand.brandId));
+      dispatch(fetchAvailableSuppliers(selectedBrand.brandId));
     }
   }, [
     dispatch,

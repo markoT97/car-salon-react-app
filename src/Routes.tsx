@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import VehicleModels from "./components/VehicleModels";
 import CustomerServices from "./components/CustomerServices";
 import Contact from "./components/Contact";
-import RegisterForm from "./components/UserEntries/RegisterForm";
+import RegisterSellerForm from "./components/UserEntries/RegisterSellerForm";
 import LoginForm from "./components/UserEntries/LoginForm";
 import Profile from "./components/Profile";
 import UpdateProfileData from "./components/UpdateProfileData";
@@ -33,13 +33,18 @@ function Routes() {
         <GuardedRoute exact path="/services" component={CustomerServices} />
         <GuardedRoute exact path="/vehicle-models" component={VehicleModels} />
         <GuardedRoute exact path="/contact" component={Contact} />
-        <GuardedRoute exact path="/register" component={RegisterForm} />
+        <GuardedRoute
+          exact
+          meta={{ auth: true }}
+          path="/register"
+          component={RegisterSellerForm}
+        />
         <GuardedRoute exact path="/login" component={LoginForm} />
         <GuardedRoute
           exact
           path="/my-profile"
           component={Profile}
-          meta={{ auth: true }}
+          //meta={{ auth: true }}
         />
         <GuardedRoute
           exact

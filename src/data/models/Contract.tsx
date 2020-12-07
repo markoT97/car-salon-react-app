@@ -1,7 +1,9 @@
 export type Contract = {
   contractId?: number;
   createdAt?: Date;
-  paymentMethod: string;
+  paymentMethod?: string;
+  carId?: number;
+  sellerId?: number;
 };
 
-export const defaultBrand: Contract = { contractId: 0, paymentMethod: "" };
+export const defaultContract: Contract = { contractId: 0, paymentMethod: "" };

@@ -13,9 +13,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux-store";
 import { useHistory } from "react-router-dom";
+import { setPurchaseModalVisibility } from "./../../redux-store/modals/actions";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -66,7 +67,21 @@ function VehicleInfo() {
     (state: AppState) => state.vehicleList.selectedVehicle
   );
 
+  const { isAuthenticated, token } = useSelector(
+    (state: AppState) => state.userProfile
+  );
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
+
+  const handleOpenPurchaseModal = () => {
+    if (!(isAuthenticated && token.role === "Customer")) {
+      console.error("User is not authenticated or is not a customer");
+      return history.push("/login");
+    }
+    dispatch(setPurchaseModalVisibility(true));
+  };
 
   return (
     <>
@@ -156,7 +171,7 @@ function VehicleInfo() {
         </Table>
       </TableContainer>
       <Button
-        onClick={() => history.push("/")}
+        onClick={handleOpenPurchaseModal}
         fullWidth
         variant="contained"
         color="primary"

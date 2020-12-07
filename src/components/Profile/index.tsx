@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { Container, Grid, Divider } from "@material-ui/core";
-import UserOverview from "./UserOverview";
-import UserDescription from "./UserDescription";
-import SoldCars from "./SoldCars";
-import SellerInfo from "./SellerInfo";
+import { Container, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux-store";
 import { fetchCurrentUser } from "../../redux-store/userProfile/actions";
-import CarsWithoutContract from "./CarsWithoutContracts";
-import { Receipt } from "@material-ui/icons";
+import { USER_ROLES } from "../../shared/configuration";
+import CustomerProfile from "./Customer";
+import SellerProfile from "./Seller";
+import AdminPanel from "./Admin";
+
+const { CUSTOMER, SELLER, ADMIN } = USER_ROLES;
 
 /*
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +25,28 @@ const useStyles = makeStyles((theme) => ({
 function Index() {
   //const classes = useStyles();
   const userProfile = useSelector((state: AppState) => state.userProfile);
-  const { token } = userProfile;
+  const { token, currentUser } = userProfile;
+
+  const { role } = currentUser;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCurrentUser(parseInt(token.jti)));
   }, [dispatch, token.jti]);
+
+  const getUserProfile = () => {
+    switch (role) {
+      case SELLER:
+        return <SellerProfile />;
+      case CUSTOMER:
+        return <CustomerProfile />;
+      case ADMIN:
+        return <AdminPanel />;
+      default:
+        return <></>;
+    }
+  };
 
   return (
     <Container>
@@ -42,28 +57,7 @@ function Index() {
         alignItems="center"
         justify="center"
       >
-        <Grid item xs={12}>
-          <UserOverview />
-        </Grid>
-        <Grid item xs={12}>
-          <SellerInfo />
-        </Grid>
-        <Grid item>
-          <UserDescription />
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
-          <h1>
-            <Receipt /> &nbsp;Cars waiting for contract
-          </h1>
-
-          <CarsWithoutContract />
-        </Grid>
-        <Grid item>
-          <SoldCars />
-        </Grid>
+        {getUserProfile()}
       </Grid>
     </Container>
   );

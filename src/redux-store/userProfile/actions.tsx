@@ -10,17 +10,17 @@ import {
 import { authenticate } from "../../data/services/userService";
 import { get as getUser } from "../../data/services/userService";
 import { getAll as getUserSignedContracts } from "../../data/services/userSignedContractService";
-import { getAll as getVehicles } from "../../data/services/vehicleService";
+import {
+  getCarsSoldBySeller,
+  getCarsBoughtByCustomer,
+} from "../../data/services/vehicleService";
 import { AuthenticationModel } from "../../data/models/AuthenticationModel";
 import jwtDecode from "jwt-decode";
 import { TokenModel } from "./../../data/models/TokenModel";
-import { TOKEN_IN_LOCAL_STORAGE } from "./../../shared/constants";
+import { TOKEN_IN_LOCAL_STORAGE } from "../../shared/configuration";
 import { getAllWaitingContract } from "./../../data/services/vehicleService";
-import { UserSignedContract } from "../../data/models/UserSignedContract";
-import {
-  postContract,
-  postUserSignedContract,
-} from "../../data/services/userSignedContractService";
+import { postContract } from "../../data/services/userSignedContractService";
+import { Contract } from "../../data/models/Contract";
 
 export function authenticateUser(authenticationModel: AuthenticationModel) {
   return async (dispatch: any) => {
@@ -55,11 +55,19 @@ export function fetchUserSellingInfo(userId: number) {
   };
 }
 
-export function fetchCarsSoldByUser(userId: number) {
+export function fetchCarsSoldBySeller(sellerId: number) {
   return async (dispatch: any) => {
-    const { data: soldCars } = await getVehicles(...Array(4), userId);
+    const { data: soldCars } = await getCarsSoldBySeller(sellerId);
 
     return dispatch({ type: FETCH_CARS_SOLD_BY_USER, payload: soldCars });
+  };
+}
+
+export function fetchCarsBoughtByCustomer(customerId: number) {
+  return async (dispatch: any) => {
+    const { data: boughtCars } = await getCarsBoughtByCustomer(customerId);
+
+    return dispatch({ type: FETCH_CARS_SOLD_BY_USER, payload: boughtCars });
   };
 }
 
@@ -71,20 +79,16 @@ export function fetchCarsWithoutContracts() {
   };
 }
 
-export function selectCarsForSign(userSignedContract: UserSignedContract) {
+export function selectCarsForSign(contract: Contract) {
   return async (dispatch: any) => {
-    const { data: newContract } = await postContract({ paymentMethod: "Cash" });
+    const { data: newContract } = await postContract({
+      ...contract,
+      paymentMethod: "Cash",
+    });
 
-    if (newContract) {
-      userSignedContract.contractId = newContract.contractId;
-      const { data: newUserSignedContract } = await postUserSignedContract(
-        userSignedContract
-      );
-
-      return dispatch({
-        type: SIGN_CONTRACT_FOR_CAR,
-        payload: newUserSignedContract,
-      });
-    }
+    return dispatch({
+      type: SIGN_CONTRACT_FOR_CAR,
+      payload: newContract,
+    });
   };
 }

@@ -1,6 +1,7 @@
 import API from "./../../utils/API";
-import { UserSignedContract } from "../models/UserSignedContract";
 import { Contract } from "./../models/Contract";
+
+const root = "contracts";
 
 export async function getAll(userId?: number) {
   var config = {
@@ -9,15 +10,9 @@ export async function getAll(userId?: number) {
     },
   };
 
-  return await API.get("/user-signed-contracts", config);
+  return await API.get(root, config);
 }
 
 export async function postContract(contract: Contract) {
-  return await API.post("/contracts", contract);
-}
-
-export async function postUserSignedContract(
-  userSignedContract: UserSignedContract
-) {
-  return await API.post("/user-signed-contracts", userSignedContract);
+  return await API.post(root, contract);
 }

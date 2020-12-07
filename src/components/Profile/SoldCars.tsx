@@ -9,10 +9,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCarsSoldByUser } from "../../redux-store/userProfile/actions";
+import {
+  fetchCarsSoldBySeller,
+  fetchCarsBoughtByCustomer,
+} from "../../redux-store/userProfile/actions";
 import { AppState } from "../../redux-store";
-import { Vehicle } from "../../data/models/Vehicle";
-import { defaultImage } from "../../data/models/Image";
+import { VehicleSold } from "../../data/models/VehicleSold";
+import { USER_ROLES } from "../../shared/configuration";
+
+const { SELLER, CUSTOMER } = USER_ROLES;
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -33,13 +38,25 @@ function SoldCars() {
   const { currentUser, soldCars } = userProfile;
 
   useEffect(() => {
-    dispatch(fetchCarsSoldByUser(currentUser.userId));
-  }, [dispatch, currentUser.userId]);
+    if (currentUser.role === SELLER) {
+      dispatch(fetchCarsSoldBySeller(currentUser.userId));
+    } else if (currentUser.role === CUSTOMER) {
+      dispatch(fetchCarsBoughtByCustomer(currentUser.userId));
+    }
+  }, [dispatch, currentUser.role, currentUser.userId]);
   return (
     <>
-      <h2 className={classes.heading}>Recently bought cars</h2>
+      <h2 className={classes.heading}>
+        {`Recently ${
+          currentUser.role === SELLER
+            ? "sold"
+            : currentUser.role === CUSTOMER
+            ? "bought"
+            : ""
+        } cars`}
+      </h2>
       <Grid container alignItems="center" justify="center" spacing={1}>
-        {soldCars.map((car: Vehicle, i: number) => {
+        {soldCars.map((car: VehicleSold, i: number) => {
           return (
             <Grid item key={i} md={4}>
               <Card className={classes.card}>
@@ -49,10 +66,7 @@ function SoldCars() {
                     alt={car.brandName + " " + car.modelName}
                     height="190"
                     image={
-                      defaultImage.path +
-                      defaultImage.name +
-                      "." +
-                      defaultImage.extension
+                      car.imagePath + car.imageName + "." + car.imageExtension
                     }
                     title={car.brandName + " " + car.modelName}
                   />

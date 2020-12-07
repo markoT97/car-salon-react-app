@@ -17,11 +17,11 @@ import {
 } from "@material-ui/core";
 import { Create } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { AppState } from "../../redux-store";
+import { AppState } from "../../../redux-store";
 import {
   fetchCarsWithoutContracts,
   selectCarsForSign,
-} from "../../redux-store/userProfile/actions";
+} from "../../../redux-store/userProfile/actions";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -91,7 +91,7 @@ export default function CustomizedTables() {
                       dispatch(
                         selectCarsForSign({
                           carId: car.carId,
-                          userId: currentUser.userId,
+                          sellerId: currentUser.userId,
                         })
                       )
                     }

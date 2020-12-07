@@ -2,11 +2,11 @@ import { User } from "../../data/models/User";
 import { UserSignedContract } from "../../data/models/UserSignedContract";
 import { Vehicle } from "../../data/models/Vehicle";
 import { TokenModel } from "../../data/models/TokenModel";
+import { VehicleSold } from "../../data/models/VehicleSold";
 
 export interface UserProfileState {
   currentUser: User;
-  sellerInfo: UserSignedContract;
-  soldCars: Array<Vehicle>;
+  soldCars: Array<VehicleSold>;
   carsWithoutContracts: Array<Vehicle>;
   token: TokenModel;
   isAuthenticated: Boolean;
@@ -42,7 +42,7 @@ interface FetchUserSellingInfoAction {
 
 interface FetchCarsSoldByUserAction {
   type: typeof FETCH_CARS_SOLD_BY_USER;
-  payload: Array<Vehicle>;
+  payload: Array<VehicleSold>;
 }
 
 interface FetchCarsWithoutContractAction {

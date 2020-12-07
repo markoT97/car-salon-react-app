@@ -4,15 +4,6 @@ import { getAll as getCars } from "../../data/services/vehicleService";
 import { getAll as getImages } from "../../data/services/imageService";
 import { defaultImage } from "./../../data/models/Image";
 import { put } from "../../data/services/vehicleService";
-import {
-  postNaturalPerson,
-  postCustomer,
-  postLegalEntity,
-  getCustomer,
-} from "../../data/services/customerService";
-import { NaturalPerson } from "../../data/models/NaturalPerson";
-import { Customer } from "../../data/models/Customer";
-import { LegalEntity } from "../../data/models/LegalEntity";
 
 export function fetchVehicles(
   brandId?: number,
@@ -44,60 +35,15 @@ export function selectVehicle(vehicle: Vehicle) {
   };
 }
 
-export function purchaseVehicle(
-  vehicle: Vehicle,
-  customerType: any,
-  formData: any,
-  isOldUser: boolean
-) {
+export function purchaseVehicle(selectedVehicle: Vehicle, customerId: number) {
   return async (dispatch: any) => {
-    if (!isOldUser) {
-      if (customerType === "naturalPerson") {
-        await postNaturalPerson(formData as NaturalPerson);
+    selectedVehicle.customerId = customerId;
 
-        const customer = formData as Customer;
-        customer.pib = undefined;
-
-        const { data: newCustomer } = await postCustomer(customer);
-        vehicle.customerId = newCustomer.customerId;
-
-        await put(vehicle);
-      } else {
-        await postLegalEntity(formData as LegalEntity);
-
-        const customer = formData as Customer;
-        customer.jmbg = undefined;
-
-        const { data: newCustomer } = await postCustomer(customer);
-        vehicle.customerId = newCustomer.customerId;
-
-        await put(vehicle);
-      }
-    } else {
-      if (customerType === "naturalPerson") {
-        const { data: foundedCustomer } = await getCustomer(
-          (formData as NaturalPerson).jmbg
-        );
-        if (foundedCustomer) {
-          vehicle.customerId = foundedCustomer[0].customerId;
-
-          await put(vehicle);
-        }
-      } else {
-        const { data: foundedCustomer } = await getCustomer(
-          (formData as LegalEntity).pib
-        );
-        if (foundedCustomer) {
-          vehicle.customerId = foundedCustomer[0].customerId;
-
-          await put(vehicle);
-        }
-      }
-    }
+    await put(selectedVehicle);
 
     return dispatch({
       type: PURCHASE_VEHICLE,
-      payload: vehicle.carId,
+      payload: selectedVehicle.carId,
     });
   };
 }

@@ -4,8 +4,27 @@ import { useFormik } from "formik";
 import { updateValidationSchema } from "../../shared/validation-schemas";
 import { RegisterModel } from "../../data/models/RegisterModel";
 import { useSelector } from "react-redux";
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from "@material-ui/core";
 import { AppState } from "../../redux-store";
 import { put } from "../../data/services/userService";
+import { useHistory } from "react-router";
+
+const genders = [
+  {
+    title: "Male",
+    value: "M",
+  },
+  {
+    title: "Female",
+    value: "F",
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -22,10 +41,14 @@ const DataForm = () => {
   const userProfile = useSelector((state: AppState) => state.userProfile);
   const { currentUser } = userProfile;
 
+  const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
-      firstName: currentUser.firstName,
-      lastName: currentUser.lastName,
+      role: "",
+      firstName: currentUser.firstName ? currentUser.firstName : "",
+      lastName: currentUser.lastName ? currentUser.lastName : "",
+      gender: currentUser.gender ? currentUser.gender : "",
       email: currentUser.email,
       address: currentUser.address,
       imagePath:
@@ -41,11 +64,21 @@ const DataForm = () => {
         role: currentUser.role,
         jmbg: currentUser.jmbg,
       });
+      history.push("my-profile");
     },
   });
 
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    touched,
+    errors,
+    dirty,
+    isValid,
+  } = formik;
   return (
-    <form onSubmit={formik.handleSubmit} className={classes.form}>
+    <form onSubmit={handleSubmit} className={classes.form}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -66,7 +99,7 @@ const DataForm = () => {
             label="JMBG"
             fullWidth
             autoComplete="jmbg"
-            onChange={formik.handleChange}
+            onChange={handleChange}
             defaultValue={currentUser.jmbg}
           />
         </Grid>
@@ -78,10 +111,10 @@ const DataForm = () => {
             label="Email"
             fullWidth
             autoComplete="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            error={formik.touched.email && formik.errors.email ? true : false}
-            helperText={formik.touched.email && formik.errors.email}
+            onChange={handleChange}
+            value={values.email}
+            error={touched.email && errors.email ? true : false}
+            helperText={touched.email && errors.email}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -92,12 +125,10 @@ const DataForm = () => {
             label="First name"
             fullWidth
             autoComplete="fname"
-            onChange={formik.handleChange}
-            value={formik.values.firstName}
-            error={
-              formik.touched.firstName && formik.errors.firstName ? true : false
-            }
-            helperText={formik.touched.firstName && formik.errors.firstName}
+            onChange={handleChange}
+            value={values.firstName}
+            error={touched.firstName && errors.firstName ? true : false}
+            helperText={touched.firstName && errors.firstName}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -108,13 +139,34 @@ const DataForm = () => {
             label="Last name"
             fullWidth
             autoComplete="lname"
-            onChange={formik.handleChange}
-            value={formik.values.lastName}
-            error={
-              formik.touched.lastName && formik.errors.lastName ? true : false
-            }
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            onChange={handleChange}
+            value={values.lastName}
+            error={touched.lastName && errors.lastName ? true : false}
+            helperText={touched.lastName && errors.lastName}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup
+              aria-label="gender"
+              name="gender"
+              defaultValue={currentUser.gender}
+              row
+            >
+              {genders.map((gender, i) => {
+                return (
+                  <FormControlLabel
+                    key={i}
+                    value={gender.value}
+                    control={<Radio color="primary" />}
+                    label={gender.title}
+                    onChange={handleChange}
+                  />
+                );
+              })}
+            </RadioGroup>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -124,12 +176,10 @@ const DataForm = () => {
             label="Address"
             fullWidth
             autoComplete="address"
-            onChange={formik.handleChange}
-            value={formik.values.address}
-            error={
-              formik.touched.address && formik.errors.address ? true : false
-            }
-            helperText={formik.touched.address && formik.errors.address}
+            onChange={handleChange}
+            value={values.address}
+            error={touched.address && errors.address ? true : false}
+            helperText={touched.address && errors.address}
           />
         </Grid>
         <Grid item xs={12}>
@@ -139,12 +189,10 @@ const DataForm = () => {
             label="Image path"
             fullWidth
             autoComplete="ipath"
-            onChange={formik.handleChange}
-            value={formik.values.imagePath}
-            error={
-              formik.touched.imagePath && formik.errors.imagePath ? true : false
-            }
-            helperText={formik.touched.imagePath && formik.errors.imagePath}
+            onChange={handleChange}
+            value={values.imagePath}
+            error={touched.imagePath && errors.imagePath ? true : false}
+            helperText={touched.imagePath && errors.imagePath}
           />
         </Grid>
         <Grid item xs={12}>
@@ -155,12 +203,10 @@ const DataForm = () => {
             label="Password"
             fullWidth
             autoComplete="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            error={
-              formik.touched.password && formik.errors.password ? true : false
-            }
-            helperText={formik.touched.password && formik.errors.password}
+            onChange={handleChange}
+            value={values.password}
+            error={touched.password && errors.password ? true : false}
+            helperText={touched.password && errors.password}
           />
         </Grid>
         <Button
@@ -169,7 +215,7 @@ const DataForm = () => {
           variant="contained"
           color="primary"
           className={classes.submit}
-          disabled={!(formik.isValid && formik.dirty)}
+          disabled={!(isValid && dirty)}
         >
           Save changes
         </Button>

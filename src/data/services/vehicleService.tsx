@@ -35,6 +35,34 @@ export async function getAllWaitingContract(
   return await API.get("/cars-waiting-contracts", config);
 }
 
+export async function getCarsSoldBySeller(sellerId: number) {
+  var config = {
+    params: {
+      seller_id: sellerId,
+    },
+  };
+
+  return await API.get("/cars-sold-by-seller", config);
+}
+
+export async function getCarsBoughtByCustomer(customerId: number) {
+  var config = {
+    params: {
+      customer_id: customerId,
+    },
+  };
+
+  return await API.get("/cars-bought-by-customer", config);
+}
+
+export async function post(vehicle: Vehicle) {
+  return await API.post("/cars", vehicle);
+}
+
 export async function put(vehicle: Vehicle) {
   return await API.put("/cars", vehicle);
+}
+
+export async function deleteItem(id: number) {
+  return await API.delete("/cars/" + id);
 }
